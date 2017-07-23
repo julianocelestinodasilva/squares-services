@@ -1,5 +1,6 @@
 package vittahealth.hiring.challenge;
 
+import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import static vittahealth.hiring.challenge.JPAUtil.session;
@@ -7,8 +8,10 @@ import static vittahealth.hiring.challenge.JPAUtil.session;
 public class SquareRepository {
 
     public Square find() {
+        final Session session = session();
         Query<Square> query =
-                session().createNativeQuery("SELECT * FROM square u WHERE 1 = 1", Square.class);
+
+                session.createNativeQuery("SELECT * FROM square u", Square.class);
 
         Square usuario = null;
         try {
@@ -16,7 +19,7 @@ public class SquareRepository {
         } catch (Exception e) {
             return usuario;
         }
-        session().close();
+        session.close();
         return usuario;
     }
 }
