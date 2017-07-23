@@ -1,7 +1,6 @@
 version: '2'
 services:
   squares-service:
-    tty: true
     build: .
     volumes:
       - "./squares-service:/src"

@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import spark.Spark;
 import spark.servlet.SparkApplication;
 
+import java.util.List;
+
 import static spark.Spark.get;
 
 public class SquareEndPoint implements SparkApplication {
@@ -23,14 +25,12 @@ public class SquareEndPoint implements SparkApplication {
 
         get("/teste", (request, response) -> {
             // return new Gson().toJson("Funcionou alteracao");
-
             SquareRepository squareRepository = new SquareRepository();
-            Square square = squareRepository.find();
-
-            if (square == null) {
+            List<Square> squares = squareRepository.find();
+            if (squares == null) {
                 Spark.halt(401, "Nenhum square encontrado");
             }
-            return new Gson().toJson(square);
+            return new Gson().toJson(squares);
         });
     }
 }
