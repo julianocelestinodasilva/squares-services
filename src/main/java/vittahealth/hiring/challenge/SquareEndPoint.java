@@ -1,6 +1,7 @@
 package vittahealth.hiring.challenge;
 
 import com.google.gson.Gson;
+import spark.Spark;
 import spark.servlet.SparkApplication;
 
 import static spark.Spark.get;
@@ -21,7 +22,15 @@ public class SquareEndPoint implements SparkApplication {
         });*/
 
         get("/teste", (request, response) -> {
-            return new Gson().toJson("Funcionou alteracao");
+            // return new Gson().toJson("Funcionou alteracao");
+
+            SquareRepository squareRepository = new SquareRepository();
+            Square square = squareRepository.find();
+
+            if (square == null) {
+                Spark.halt(401, "Nenhum square encontrado");
+            }
+            return new Gson().toJson(square);
         });
     }
 }
