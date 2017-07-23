@@ -10,15 +10,19 @@ import static spark.Spark.get;
 
 public class TerritoryEndPoint implements SparkApplication {
 
+    private Data data;
+
     @Override
     public void init() {
         get("/territories", (request, response) -> {
             TerritoryRepository repository = new TerritoryRepository();
             List<Territory> territories = repository.find();
-            if (territories == null) {
-                Spark.halt(404, "territories not found");
+            if (territories == null || territories.size() < 1) {
+                data = new Data("territories not found");
+                Spark.halt(404, new Gson().toJson(data));
             }
-            return new Gson().toJson(territories);
+            data = new Data(territories.size(),territories);
+            return new Gson().toJson(data);
         });
     }
 }
