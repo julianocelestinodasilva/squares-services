@@ -7,12 +7,12 @@ import java.util.List;
 
 import static vittahealth.hiring.challenge.JPAUtil.session;
 
-public class SquareRepository {
+public class TerritoryRepository {
 
-    public List<Square> find() {
+    public List<Territory> find() {
         final Session session = session();
-        Query<Square> query = session.createNativeQuery("SELECT * FROM square u", Square.class);
+        Query<Territory> query = session.createNativeQuery("SELECT * FROM territory u", Territory.class);
         return  query.list();
-        // session.close();
+        // TODO session.close();
     }
 }

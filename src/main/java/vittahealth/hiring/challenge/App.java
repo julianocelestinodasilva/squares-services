@@ -1,6 +1,6 @@
 package vittahealth.hiring.challenge.spark;
 
-import vittahealth.hiring.challenge.SquareEndPoint;
+import vittahealth.hiring.challenge.TerritoryEndPoint;
 
 import static spark.Spark.*;
 
@@ -36,6 +36,6 @@ public class App {
     }
 
     private static void startEndPoints() {
-        new SquareEndPoint().init();
+        new TerritoryEndPoint().init();
     }
 }
