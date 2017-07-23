@@ -15,6 +15,7 @@ public class TerritoryEndPoint implements SparkApplication {
     @Override
     public void init() {
         get("/territories", (request, response) -> {
+            response.type("application/json");
             TerritoryRepository repository = new TerritoryRepository();
             List<Territory> territories = repository.find();
             if (territories == null || territories.size() < 1) {

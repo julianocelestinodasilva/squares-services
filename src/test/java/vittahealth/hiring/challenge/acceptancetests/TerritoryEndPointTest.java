@@ -1,15 +1,23 @@
 package vittahealth.hiring.challenge.acceptancetests;
 
 
-import org.junit.Before;
-import org.junit.Test;
+import io.restassured.response.Response;
+import org.junit.*;
+import spark.Spark;
+import sun.applet.Main;
 import vittahealth.hiring.challenge.Territory;
 
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static io.restassured.RestAssured.expect;
+import static io.restassured.RestAssured.request;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.isEmptyOrNullString;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 
 public class TerritoryEndPointTest {
@@ -26,14 +34,23 @@ public class TerritoryEndPointTest {
         url = URLApi.territories();
     }
 
+
     @Test
     public void get_all_territories() throws Exception {
         territories = DataBaseUtils.persistTerritories();
         territory0 = territories.get(0);
         territory1 = territories.get(1);
         logger.log(Level.INFO, url);
-        final String asString = expect().statusCode(200).when().get(url).asString();
-        assertEquals(getExpectedJson(),asString);
+        /*final String asString = expect().statusCode(200).when().get(url).asString();
+        assertEquals(getExpectedJson(),asString);*/
+
+        expect().statusCode(200).
+                body("size()", is(territories.size())).
+                body("count", is(territories.size())).
+                body("data.get(0).id", notNullValue()).
+                /*body("get(0).id", notNullValue()).
+                body("get(0).name", equalTo(territory0.getName())).*/
+                when().get(url);
     }
 
     private String getExpectedJson() {
