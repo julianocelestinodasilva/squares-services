@@ -1,7 +1,6 @@
 package vittahealth.hiring.challenge.acceptancetests;
 
 
-import com.google.gson.JsonObject;
 import org.junit.Before;
 import org.junit.Test;
 import vittahealth.hiring.challenge.Territory;
@@ -11,10 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static io.restassured.RestAssured.expect;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.isEmptyOrNullString;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 
 public class TerritoryEndPointTest {
