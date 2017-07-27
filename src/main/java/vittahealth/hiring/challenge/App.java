@@ -1,6 +1,4 @@
-package vittahealth.hiring.challenge.spark;
-
-import vittahealth.hiring.challenge.TerritoryEndPoint;
+package vittahealth.hiring.challenge;
 
 import static spark.Spark.*;
 
@@ -19,7 +17,6 @@ public class App {
 
     private static void configureHeaders() {
         options("/*", (request, response) -> {
-
             String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
             if (accessControlRequestHeaders != null) {
                 response.header("Access-Control-Allow-Headers", accessControlRequestHeaders);
@@ -31,7 +28,6 @@ public class App {
             }
             return "OK";
         });
-
         before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
     }
 

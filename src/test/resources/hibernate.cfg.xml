@@ -13,6 +13,6 @@
         <property name="hibernate.format_sql">true</property>
         <property name="hbm2ddl.auto">update</property>
 
-        <mapping class="vittahealth.hiring.challenge.Territory" />
+        <mapping class="vittahealth.hiring.challenge.domain.Territory" />
     </session-factory>
 </hibernate-configuration>

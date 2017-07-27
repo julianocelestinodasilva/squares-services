@@ -3,6 +3,8 @@ package vittahealth.hiring.challenge;
 import com.google.gson.Gson;
 import spark.Spark;
 import spark.servlet.SparkApplication;
+import vittahealth.hiring.challenge.domain.Territory;
+import vittahealth.hiring.challenge.domain.TerritoryRepository;
 
 import java.util.List;
 

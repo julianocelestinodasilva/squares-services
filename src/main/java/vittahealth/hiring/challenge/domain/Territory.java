@@ -1,4 +1,4 @@
-package vittahealth.hiring.challenge;
+package vittahealth.hiring.challenge.domain;
 
 import org.hibernate.annotations.GenericGenerator;
 
