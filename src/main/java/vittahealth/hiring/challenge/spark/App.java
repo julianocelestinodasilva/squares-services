@@ -1,4 +1,6 @@
-package vittahealth.hiring.challenge;
+package vittahealth.hiring.challenge.spark;
+
+import vittahealth.hiring.challenge.TerritoryEndPoint;
 
 import static spark.Spark.*;
 

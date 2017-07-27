@@ -12,7 +12,16 @@ public class TerritoryRepository {
     public List<Territory> find() {
         final Session session = session();
         Query<Territory> query = session.createNativeQuery("SELECT * FROM territory u", Territory.class);
-        return  query.list();
-        // TODO session.close();
+        final List<Territory> territories = query.list();
+        session.close();
+        return territories;
+    }
+
+    public List<Territory> findOrderedByMostPaintedArea() {
+        final Session session = session();
+        Query<Territory> query = session.createNativeQuery("SELECT * FROM territory u ORDER BY paintedArea DESC", Territory.class);
+        final List<Territory> territories = query.list();
+        session.close();
+        return territories;
     }
 }

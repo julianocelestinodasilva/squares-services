@@ -18,14 +18,22 @@ public class TerritoryEndPoint implements SparkApplication {
     public void init() {
         get("/territories", (request, response) -> {
             response.type("application/json");
-            TerritoryRepository repository = new TerritoryRepository();
-            List<Territory> territories = repository.find();
-            if (territories == null || territories.size() < 1) {
-                data = new Data("territories not found");
-                Spark.halt(404, new Gson().toJson(data));
+            final String order = request.queryParams("order");
+            if ("mostPaintedArea".equals(order)) {
+                List<Territory> territories = new TerritoryRepository().findOrderedByMostPaintedArea();
+                return returnTerritories(territories);
             }
-            data = new Data(territories.size(),territories);
-            return new Gson().toJson(data);
+            List<Territory> territories = new TerritoryRepository().find();
+            return returnTerritories(territories);
         });
+    }
+
+    private Object returnTerritories(List<Territory> territories) {
+        if (territories == null || territories.size() < 1) {
+            data = new Data("territories not found");
+            Spark.halt(404, new Gson().toJson(data));
+        }
+        data = new Data(territories.size(),territories);
+        return new Gson().toJson(data);
     }
 }
