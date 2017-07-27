@@ -34,29 +34,27 @@ public class TerritoryEndPointTest {
         url = URLApi.territories();
     }
 
-
     @Test
     public void get_all_territories() throws Exception {
         territories = DataBaseUtils.persistTerritories();
         territory0 = territories.get(0);
         territory1 = territories.get(1);
         logger.log(Level.INFO, url);
-        /*final String asString = expect().statusCode(200).when().get(url).asString();
-        assertEquals(getExpectedJson(),asString);*/
-
         expect().statusCode(200).
                 body("size()", is(territories.size())).
                 body("count", is(territories.size())).
-                body("data.get(0).id", notNullValue()).
-                /*body("get(0).id", notNullValue()).
-                body("get(0).name", equalTo(territory0.getName())).*/
+                body("data.get(0).id", equalTo(1)).
+                body("data.get(0).name", equalTo(territory0.getName())).
+                body("data.get(0).startArea", equalTo(territory0.getStartArea())).
+                body("data.get(0).endArea", equalTo(territory0.getEndArea())).
+                body("data.get(0).area", equalTo(territory0.getArea().intValue())).
+                body("data.get(0).paintedArea", equalTo(territory0.getPaintedArea().intValue())).
+                body("data.get(1).id", equalTo(2)).
+                body("data.get(1).name", equalTo(territory1.getName())).
+                body("data.get(1).startArea", equalTo(territory1.getStartArea())).
+                body("data.get(1).endArea", equalTo(territory1.getEndArea())).
+                body("data.get(1).area", equalTo(territory1.getArea().intValue())).
+                body("data.get(1).paintedArea", equalTo(territory1.getPaintedArea().intValue())).
                 when().get(url);
-    }
-
-    private String getExpectedJson() {
-        return  "{\"count\":"+territories.size()+"" +
-                ",\"data\":[" +
-                "{\"id\":"+territory0.getId()+",\"name\":\""+territory0.getName()+"\",\"startArea\":\""+territory0.getStartArea()+"\",\"endArea\":\""+territory0.getEndArea()+"\",\"area\":"+territory0.getArea()+",\"paintedArea\":"+territory0.getPaintedArea()+"}" +
-               ",{\"id\":"+territory1.getId()+",\"name\":\""+territory1.getName()+"\",\"startArea\":\""+territory1.getStartArea()+"\",\"endArea\":\""+territory1.getEndArea()+"\",\"area\":"+territory1.getArea()+",\"paintedArea\":"+territory1.getPaintedArea()+"}]}";
     }
 }
