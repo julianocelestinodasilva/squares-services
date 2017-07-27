@@ -12,6 +12,8 @@ import static spark.Spark.get;
 
 public class TerritoryEndPoint implements SparkApplication {
 
+    private static final String ORDER_BY_MOST_PAINTED_AREA = "mostPaintedArea";
+
     private Data data;
 
     @Override
@@ -19,7 +21,7 @@ public class TerritoryEndPoint implements SparkApplication {
         get("/territories", (request, response) -> {
             response.type("application/json");
             final String order = request.queryParams("order");
-            if ("mostPaintedArea".equals(order)) {
+            if (ORDER_BY_MOST_PAINTED_AREA.equals(order)) {
                 List<Territory> territories = new TerritoryRepository().findOrderedByMostPaintedArea();
                 return returnTerritories(territories);
             }

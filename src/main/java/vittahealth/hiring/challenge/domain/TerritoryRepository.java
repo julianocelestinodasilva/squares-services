@@ -9,9 +9,11 @@ import static vittahealth.hiring.challenge.JPAUtil.session;
 
 public class TerritoryRepository {
 
+    private static final String GET_ALL_TERRITORIES = "SELECT * FROM territory u";
+
     public List<Territory> find() {
         final Session session = session();
-        Query<Territory> query = session.createNativeQuery("SELECT * FROM territory u", Territory.class);
+        Query<Territory> query = session.createNativeQuery(GET_ALL_TERRITORIES, Territory.class);
         final List<Territory> territories = query.list();
         session.close();
         return territories;
@@ -19,7 +21,7 @@ public class TerritoryRepository {
 
     public List<Territory> findOrderedByMostPaintedArea() {
         final Session session = session();
-        Query<Territory> query = session.createNativeQuery("SELECT * FROM territory u ORDER BY paintedArea DESC", Territory.class);
+        Query<Territory> query = session.createNativeQuery(GET_ALL_TERRITORIES + " ORDER BY paintedArea DESC", Territory.class);
         final List<Territory> territories = query.list();
         session.close();
         return territories;
