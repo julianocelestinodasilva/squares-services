@@ -36,19 +36,18 @@ public class TerritoryEndPointTest {
         logger.log(Level.INFO, url);
         expect().statusCode(200).
                 body("size()", is(territories.size())).
-                body("count", is(territories.size())).
-                body("data.get(0).id", equalTo(2)).
-                body("data.get(0).name", equalTo(territory1.getName())).
-                body("data.get(0).startArea", equalTo(territory1.getStartArea())).
-                body("data.get(0).endArea", equalTo(territory1.getEndArea())).
-                body("data.get(0).area", equalTo(territory1.getArea().intValue())).
-                body("data.get(0).paintedArea", equalTo(territory1.getPaintedArea().intValue())).
-                body("data.get(1).id", equalTo(1)).
-                body("data.get(1).name", equalTo(territory0.getName())).
-                body("data.get(1).startArea", equalTo(territory0.getStartArea())).
-                body("data.get(1).endArea", equalTo(territory0.getEndArea())).
-                body("data.get(1).area", equalTo(territory0.getArea().intValue())).
-                body("data.get(1).paintedArea", equalTo(territory0.getPaintedArea().intValue())).
+                body("get(0).id", equalTo(2)).
+                body("get(0).name", equalTo(territory1.getName())).
+                body("get(0).startArea", equalTo(territory1.getStartArea())).
+                body("get(0).endArea", equalTo(territory1.getEndArea())).
+                body("get(0).area", equalTo(territory1.getArea().intValue())).
+                body("get(0).paintedArea", equalTo(territory1.getPaintedArea().intValue())).
+                body("get(1).id", equalTo(1)).
+                body("get(1).name", equalTo(territory0.getName())).
+                body("get(1).startArea", equalTo(territory0.getStartArea())).
+                body("get(1).endArea", equalTo(territory0.getEndArea())).
+                body("get(1).area", equalTo(territory0.getArea().intValue())).
+                body("get(1).paintedArea", equalTo(territory0.getPaintedArea().intValue())).
                 when().get(url);
     }
 
@@ -60,19 +59,18 @@ public class TerritoryEndPointTest {
         logger.log(Level.INFO, url);
         expect().statusCode(200).
                 body("size()", is(territories.size())).
-                body("count", is(territories.size())).
-                body("data.get(0).id", equalTo(1)).
-                body("data.get(0).name", equalTo(territory0.getName())).
-                body("data.get(0).startArea", equalTo(territory0.getStartArea())).
-                body("data.get(0).endArea", equalTo(territory0.getEndArea())).
-                body("data.get(0).area", equalTo(territory0.getArea().intValue())).
-                body("data.get(0).paintedArea", equalTo(territory0.getPaintedArea().intValue())).
-                body("data.get(1).id", equalTo(2)).
-                body("data.get(1).name", equalTo(territory1.getName())).
-                body("data.get(1).startArea", equalTo(territory1.getStartArea())).
-                body("data.get(1).endArea", equalTo(territory1.getEndArea())).
-                body("data.get(1).area", equalTo(territory1.getArea().intValue())).
-                body("data.get(1).paintedArea", equalTo(territory1.getPaintedArea().intValue())).
+                body("get(0).id", equalTo(1)).
+                body("get(0).name", equalTo(territory0.getName())).
+                body("get(0).startArea", equalTo(territory0.getStartArea())).
+                body("get(0).endArea", equalTo(territory0.getEndArea())).
+                body("get(0).area", equalTo(territory0.getArea().intValue())).
+                body("get(0).paintedArea", equalTo(territory0.getPaintedArea().intValue())).
+                body("get(1).id", equalTo(2)).
+                body("get(1).name", equalTo(territory1.getName())).
+                body("get(1).startArea", equalTo(territory1.getStartArea())).
+                body("get(1).endArea", equalTo(territory1.getEndArea())).
+                body("get(1).area", equalTo(territory1.getArea().intValue())).
+                body("get(1).paintedArea", equalTo(territory1.getPaintedArea().intValue())).
                 when().get(url);
     }
 }

@@ -14,7 +14,6 @@ public class TerritoryEndPoint implements SparkApplication {
 
     private static final String ORDER_BY_MOST_PAINTED_AREA = "mostPaintedArea";
 
-    private Data data;
 
     @Override
     public void init() {
@@ -32,10 +31,8 @@ public class TerritoryEndPoint implements SparkApplication {
 
     private Object returnTerritories(List<Territory> territories) {
         if (territories == null || territories.size() < 1) {
-            data = new Data("territories not found");
-            Spark.halt(404, new Gson().toJson(data));
+            Spark.halt(404, new Gson().toJson(new MessageReturn("territories not found")));
         }
-        data = new Data(territories.size(),territories);
-        return new Gson().toJson(data);
+        return new Gson().toJson(territories);
     }
 }
