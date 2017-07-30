@@ -30,10 +30,10 @@ public class TerritoryEndPointTest {
 
     @Test
     public void list_territories_ordered_by_most_proportional_painted_area() throws Exception {
-        territory0 = new Territory("territory0",new Node(0,0),new Node(10,10));
+        territory0 = new Territory("A",new Node(0,0),new Node(10,10));
         territory0.setPaintedArea(95L);
-        territory1 = new Territory("territory0",new Node(0,0),new Node(50,50));
-        territory1.setPaintedArea(2500L);
+        territory1 = new Territory("B",new Node(0,0),new Node(50,50));
+        territory1.setPaintedArea(100L);
         territories = DataBaseUtils.persistTerritories(territory1,territory0);
         url +=  "?order=mostProportionalPaintedArea";
         expectTerritoryZeroFirst();

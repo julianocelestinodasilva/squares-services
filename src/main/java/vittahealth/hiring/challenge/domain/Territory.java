@@ -35,7 +35,7 @@ public class Territory {
     private Long paintedArea;
 
     public Long proportionalPaintedArea() {
-        return (100 / area() * paintedArea);
+        return ((Float) ((new Float(paintedArea) / new Float(area())) * 100)).longValue();
     }
 
     public Long area() {

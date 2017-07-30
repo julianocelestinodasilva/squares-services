@@ -29,7 +29,7 @@ public class TerritoryEndPoint implements SparkApplication {
             }
             List<Territory> territories = new TerritoryRepository().find();
             if (ORDER_BY_MOST_PROPORTIONAL_PAINTED_AREA.equals(order)) {
-                Collections.sort(territories, Comparator.comparing(Territory::proportionalPaintedArea));
+                territories.sort(Comparator.comparing(Territory::proportionalPaintedArea).reversed());
             }
             return returnTerritories(territories);
         });

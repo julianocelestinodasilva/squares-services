@@ -14,7 +14,6 @@ public class DataBaseUtils {
 
     public static List<Territory> persistTerritories(Territory territoryA, Territory territoryB) throws IOException {
         List<Territory> territories = new ArrayList<Territory>();
-        territoryA.setPaintedArea(0L);
         territories.add(territoryA);
         territories.add(territoryB);
         final Session session = JPAUtil.session();
