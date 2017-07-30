@@ -14,7 +14,7 @@ public class TerritorySerializer implements JsonSerializer<Territory> {
         JsonObject tree = null;
         try {
             Gson gson = new Gson();
-            tree = (JsonObject) gson.toJsonTree(territory);
+            tree = new JsonObject();
             tree.addProperty("name",territory.getName());
             tree.addProperty("start",territory.getStartArea().toString());
             tree.addProperty("end",territory.getEndArea().toString());
