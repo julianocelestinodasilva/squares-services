@@ -36,7 +36,7 @@ public class TerritoryEndPoint implements SparkApplication {
     }
 
     private Object returnTerritories(List<Territory> territories) {
-        if (territories == null || territories.size() < 1) {
+        if (territories == null || territories.isEmpty()) {
             Spark.halt(404, new Gson().toJson(new MessageReturn("territories not found")));
         }
         GsonBuilder gson = new GsonBuilder();
