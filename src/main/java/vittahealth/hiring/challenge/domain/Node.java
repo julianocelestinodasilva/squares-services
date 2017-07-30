@@ -8,6 +8,10 @@ public class Node implements Serializable {
     private int x;
     private int y;
 
+    public long area() {
+        return x * y;
+    }
+
     public Node() {
 
     }
@@ -32,4 +36,5 @@ public class Node implements Serializable {
     public void setY(int y) {
         this.y = y;
     }
+
 }

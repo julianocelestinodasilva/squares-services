@@ -32,10 +32,11 @@ public class Territory {
     private Node endArea;
 
     @Column
-    private Long area;
-
-    @Column
     private Long paintedArea;
+
+    public Long getArea() {
+        return startArea.area() + endArea.area();
+    }
 
     public Territory() {
     }
@@ -77,14 +78,6 @@ public class Territory {
 
     public void setEndArea(Node endArea) {
         this.endArea = endArea;
-    }
-
-    public Long getArea() {
-        return area;
-    }
-
-    public void setArea(Long area) {
-        this.area = area;
     }
 
     public Long getPaintedArea() {
