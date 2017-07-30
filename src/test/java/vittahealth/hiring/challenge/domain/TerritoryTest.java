@@ -25,13 +25,6 @@ public class TerritoryTest {
         assertProportionalPaintedArea(start, end, paintedArea, expectedProportionalPaintedArea);
     }
 
-    private void assertProportionalPaintedArea(Node start, Node end, long paintedArea, int expectedProportionalPaintedArea) {
-        Territory territory = new Territory("TerritoryTest",start,end);
-        territory.setPaintedArea(paintedArea);
-        long proportionalPaintedArea = territory.proportionalPaintedArea();
-        assertEquals(expectedProportionalPaintedArea,proportionalPaintedArea);
-    }
-
     @Test
     public void should_return_area() throws Exception {
         long expectedArea = 2900;
@@ -46,6 +39,13 @@ public class TerritoryTest {
         final Node start = new Node(0,0);
         final Node end = new Node(50,50);
         area(expectedArea, start, end);
+    }
+
+    private void assertProportionalPaintedArea(Node start, Node end, long paintedArea, int expectedProportionalPaintedArea) {
+        Territory territory = new Territory("TerritoryTest",start,end);
+        territory.setPaintedArea(paintedArea);
+        long proportionalPaintedArea = territory.proportionalPaintedArea();
+        assertEquals(expectedProportionalPaintedArea,proportionalPaintedArea);
     }
 
     private void area(long expectedArea, Node start, Node end) {
