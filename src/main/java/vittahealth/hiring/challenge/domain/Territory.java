@@ -1,6 +1,11 @@
 package vittahealth.hiring.challenge.domain;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
+import vittahealth.hiring.challenge.NodeJson;
+import vittahealth.hiring.challenge.NodeJsonType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
+@TypeDefs( {@TypeDef( name= "NodeJsonType", typeClass = NodeJsonType.class)})
 public class Territory {
 
     @Id
@@ -30,7 +36,19 @@ public class Territory {
     @Column
     private Long paintedArea;
 
+    @Column
+    @Type(type = "NodeJsonType")
+    private NodeJson testEndArea;
+
     public Territory() {
+    }
+
+    public NodeJson getTestEndArea() {
+        return testEndArea;
+    }
+
+    public void setTestEndArea(NodeJson testEndArea) {
+        this.testEndArea = testEndArea;
     }
 
     public Territory(String name, String startArea, String endArea) {

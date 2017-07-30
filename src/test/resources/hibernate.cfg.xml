@@ -5,7 +5,7 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
+        <property name="hibernate.dialect">vittahealth.hiring.challenge.MyPostgreSQL9Dialect</property>
         <property name="hibernate.connection.url">jdbc:postgresql://172.19.0.3:5432/app_staging</property>
         <property name="hibernate.connection.username">admin</property>
         <property name="hibernate.connection.password">password</property>

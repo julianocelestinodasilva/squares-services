@@ -28,6 +28,11 @@ public class TerritoryEndPointTest {
     }
 
     @Test
+    public void list_territories_ordered_by_most_proportional_painted_area() throws Exception {
+
+    }
+
+    @Test
     public void list_territories_ordered_by_most_painted_area() throws Exception {
         territories = DataBaseUtils.persistTerritories(500L);
         territory0 = territories.get(0);
