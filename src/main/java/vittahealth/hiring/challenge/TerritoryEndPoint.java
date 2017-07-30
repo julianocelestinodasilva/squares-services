@@ -7,7 +7,6 @@ import spark.servlet.SparkApplication;
 import vittahealth.hiring.challenge.domain.Territory;
 import vittahealth.hiring.challenge.domain.TerritoryRepository;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -18,6 +17,7 @@ public class TerritoryEndPoint implements SparkApplication {
     private static final String ORDER_BY_MOST_PAINTED_AREA = "mostPaintedArea";
     private static final String ORDER_BY_MOST_PROPORTIONAL_PAINTED_AREA = "mostProportionalPaintedArea";
 
+    private static final String TERRITORIES_NOT_FOUND = "territories not found";
 
     @Override
     public void init() {
@@ -37,7 +37,7 @@ public class TerritoryEndPoint implements SparkApplication {
 
     private Object returnTerritories(List<Territory> territories) {
         if (territories == null || territories.isEmpty()) {
-            Spark.halt(404, new Gson().toJson(new MessageReturn("territories not found")));
+            Spark.halt(404, new Gson().toJson(new MessageReturn(TERRITORIES_NOT_FOUND)));
         }
         GsonBuilder gson = new GsonBuilder();
         gson.registerTypeAdapter(Territory.class, new TerritorySerializer());
