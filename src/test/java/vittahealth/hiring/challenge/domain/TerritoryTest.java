@@ -8,6 +8,18 @@ import static org.junit.Assert.assertEquals;
 public class TerritoryTest {
 
     @Test
+    public void should_return_proportional_painted_area() throws Exception {
+        final Node start = new Node(0,0);
+        final Node end = new Node(10,10);
+        final long paintedArea = 50L;
+        final int expectedProportionalPaintedArea = 50;
+        Territory territory = new Territory("TerritoryTest",start,end);
+        territory.setPaintedArea(paintedArea);
+        long proportionalPaintedArea = territory.proportionalPaintedArea();
+        assertEquals(expectedProportionalPaintedArea,proportionalPaintedArea);
+    }
+
+    @Test
     public void should_return_area() throws Exception {
         long expectedArea = 2900;
         final Node start = new Node(20,20);
@@ -26,8 +38,8 @@ public class TerritoryTest {
     }
 
     private void area(long expectedArea, Node start, Node end) {
-        Territory territory = new Territory("",start,end);
-        final long area = territory.getArea();
+        Territory territory = new Territory("TerritoryTest",start,end);
+        final long area = territory.area();
         assertEquals(expectedArea,area);
     }
 }

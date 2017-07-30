@@ -35,6 +35,7 @@ public class TerritoryEndPointTest {
         territory1 = new Territory("territory0",new Node(0,0),new Node(50,50));
         territory1.setPaintedArea(2500L);
         territories = DataBaseUtils.persistTerritories(territory1,territory0);
+        url +=  "?order=mostProportionalPaintedArea";
         expectTerritoryZeroFirst();
     }
 
@@ -53,7 +54,7 @@ public class TerritoryEndPointTest {
                 body("get(0).startArea.y", equalTo(territory1.getStartArea().getY())).
                 body("get(0).endArea.x", equalTo(territory1.getEndArea().getX())).
                 body("get(0).endArea.y", equalTo(territory1.getEndArea().getY())).
-                body("get(0).area", equalTo(territory1.getArea().intValue())).
+                body("get(0).area", equalTo(territory1.area().intValue())).
                 body("get(0).paintedArea", equalTo(territory1.getPaintedArea().intValue())).
                 body("get(1).id", equalTo(territory0.getId().intValue())).
                 body("get(1).name", equalTo(territory0.getName())).
@@ -61,7 +62,7 @@ public class TerritoryEndPointTest {
                 body("get(1).startArea.y", equalTo(territory0.getStartArea().getY())).
                 body("get(1).endArea.x", equalTo(territory0.getEndArea().getX())).
                 body("get(1).endArea.y", equalTo(territory0.getEndArea().getY())).
-                body("get(1).area", equalTo(territory0.getArea().intValue())).
+                body("get(1).area", equalTo(territory0.area().intValue())).
                 body("get(1).paintedArea", equalTo(territory0.getPaintedArea().intValue())).
                 when().get(url);
     }
@@ -84,7 +85,7 @@ public class TerritoryEndPointTest {
                 body("get(0).startArea.y", equalTo(territory0.getStartArea().getY())).
                 body("get(0).endArea.x", equalTo(territory0.getEndArea().getX())).
                 body("get(0).endArea.y", equalTo(territory0.getEndArea().getY())).
-                body("get(0).area", equalTo(territory0.getArea().intValue())).
+                body("get(0).area", equalTo(territory0.area().intValue())).
                 body("get(0).paintedArea", equalTo(territory0.getPaintedArea().intValue())).
                 body("get(1).id", equalTo(territory1.getId().intValue())).
                 body("get(1).name", equalTo(territory1.getName())).
@@ -92,7 +93,7 @@ public class TerritoryEndPointTest {
                 body("get(1).startArea.y", equalTo(territory1.getStartArea().getY())).
                 body("get(1).endArea.x", equalTo(territory1.getEndArea().getX())).
                 body("get(1).endArea.y", equalTo(territory1.getEndArea().getY())).
-                body("get(1).area", equalTo(territory1.getArea().intValue())).
+                body("get(1).area", equalTo(territory1.area().intValue())).
                 body("get(1).paintedArea", equalTo(territory1.getPaintedArea().intValue())).
                 when().get(url);
     }

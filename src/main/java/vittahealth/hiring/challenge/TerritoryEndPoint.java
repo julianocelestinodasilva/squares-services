@@ -7,6 +7,8 @@ import spark.servlet.SparkApplication;
 import vittahealth.hiring.challenge.domain.Territory;
 import vittahealth.hiring.challenge.domain.TerritoryRepository;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static spark.Spark.get;
@@ -14,6 +16,7 @@ import static spark.Spark.get;
 public class TerritoryEndPoint implements SparkApplication {
 
     private static final String ORDER_BY_MOST_PAINTED_AREA = "mostPaintedArea";
+    private static final String ORDER_BY_MOST_PROPORTIONAL_PAINTED_AREA = "mostProportionalPaintedArea";
 
 
     @Override
@@ -22,10 +25,12 @@ public class TerritoryEndPoint implements SparkApplication {
             response.type("application/json");
             final String order = request.queryParams("order");
             if (ORDER_BY_MOST_PAINTED_AREA.equals(order)) {
-                List<Territory> territories = new TerritoryRepository().findOrderedByMostPaintedArea();
-                return returnTerritories(territories);
+                return returnTerritories(new TerritoryRepository().findOrderedByMostPaintedArea());
             }
             List<Territory> territories = new TerritoryRepository().find();
+            if (ORDER_BY_MOST_PROPORTIONAL_PAINTED_AREA.equals(order)) {
+                Collections.sort(territories, Comparator.comparing(Territory::proportionalPaintedArea));
+            }
             return returnTerritories(territories);
         });
     }

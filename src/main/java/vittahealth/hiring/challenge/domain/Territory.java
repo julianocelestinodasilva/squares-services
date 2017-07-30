@@ -34,7 +34,11 @@ public class Territory {
     @Column
     private Long paintedArea;
 
-    public Long getArea() {
+    public Long proportionalPaintedArea() {
+        return (100 / area() * paintedArea);
+    }
+
+    public Long area() {
         return startArea.area() + endArea.area();
     }
 
