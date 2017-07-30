@@ -1,18 +1,18 @@
-package vittahealth.hiring.challenge;
+package vittahealth.hiring.challenge.domain;
 
 
 import java.io.Serializable;
 
-public class NodeJson implements Serializable {
+public class Node implements Serializable {
 
     private int x;
     private int y;
 
-    public NodeJson() {
+    public Node() {
 
     }
 
-    public NodeJson(int x, int y) {
+    public Node(int x, int y) {
         this.x = x;
         this.y = y;
     }

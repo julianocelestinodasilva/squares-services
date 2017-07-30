@@ -4,7 +4,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
-import vittahealth.hiring.challenge.NodeJson;
 import vittahealth.hiring.challenge.NodeJsonType;
 
 import javax.persistence.Column;
@@ -26,11 +25,11 @@ public class Territory {
 
     @Column
     @Type(type = "NodeJsonType")
-    private NodeJson startArea;
+    private Node startArea;
 
     @Column
     @Type(type = "NodeJsonType")
-    private NodeJson endArea;
+    private Node endArea;
 
     @Column
     private Long area;
@@ -42,7 +41,7 @@ public class Territory {
     }
 
 
-    public Territory(String name, NodeJson startArea, NodeJson endArea) {
+    public Territory(String name, Node startArea, Node endArea) {
         this.name = name;
         this.startArea = startArea;
         this.endArea = endArea;
@@ -64,19 +63,19 @@ public class Territory {
         this.name = name;
     }
 
-    public NodeJson getStartArea() {
+    public Node getStartArea() {
         return startArea;
     }
 
-    public void setStartArea(NodeJson startArea) {
+    public void setStartArea(Node startArea) {
         this.startArea = startArea;
     }
 
-    public NodeJson getEndArea() {
+    public Node getEndArea() {
         return endArea;
     }
 
-    public void setEndArea(NodeJson endArea) {
+    public void setEndArea(Node endArea) {
         this.endArea = endArea;
     }
 

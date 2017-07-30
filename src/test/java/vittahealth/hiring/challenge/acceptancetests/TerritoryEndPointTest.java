@@ -29,7 +29,7 @@ public class TerritoryEndPointTest {
 
     @Test
     public void list_territories_ordered_by_most_proportional_painted_area() throws Exception {
-
+        throw new RuntimeException("Implementar");
     }
 
     @Test

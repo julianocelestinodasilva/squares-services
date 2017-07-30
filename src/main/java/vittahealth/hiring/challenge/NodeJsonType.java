@@ -5,6 +5,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.usertype.UserType;
+import vittahealth.hiring.challenge.domain.Node;
 
 import java.io.*;
 import java.sql.PreparedStatement;
@@ -88,8 +89,8 @@ public class NodeJsonType implements UserType {
     }
 
     @Override
-    public Class<NodeJson> returnedClass() {
-        return NodeJson.class;
+    public Class<Node> returnedClass() {
+        return Node.class;
     }
 
     @Override
