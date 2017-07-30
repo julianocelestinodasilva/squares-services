@@ -2,6 +2,7 @@ package vittahealth.hiring.challenge.acceptancetests;
 
 import org.hibernate.Session;
 import vittahealth.hiring.challenge.JPAUtil;
+import vittahealth.hiring.challenge.NodeJson;
 import vittahealth.hiring.challenge.domain.Territory;
 
 import java.io.IOException;
@@ -13,11 +14,11 @@ public class DataBaseUtils {
 
     public static List<Territory> persistTerritories(Long paintedAreaTerritory1) throws IOException {
         List<Territory> territories = new ArrayList<Territory>();
-        Territory territoryA = new Territory("A","x: 0, y: 0","x: 50, y: 50");
+        Territory territoryA = new Territory("A",new NodeJson(0,0),new NodeJson(50,50));
         territoryA.setArea(2500L);
         territoryA.setPaintedArea(0L);
         territories.add(territoryA);
-        Territory territoryB = new Territory("B","x: 51, y: 51","x: 101, y: 101");
+        Territory territoryB = new Territory("B",new NodeJson(51,51),new NodeJson(101,101));
         territoryB.setArea(2500L);
         territoryB.setPaintedArea(paintedAreaTerritory1);
         territories.add(territoryB);
@@ -34,11 +35,11 @@ public class DataBaseUtils {
 
     public static List<Territory> persistTerritories() throws IOException {
         List<Territory> territories = new ArrayList<Territory>();
-        Territory territoryA = new Territory("A","x: 0, y: 0","x: 50, y: 50");
+        Territory territoryA = new Territory("A",new NodeJson(0,0),new NodeJson(50,50));
         territoryA.setArea(2500L);
         territoryA.setPaintedArea(0L);
         territories.add(territoryA);
-        Territory territoryB = new Territory("B","x: 51, y: 51","x: 101, y: 101");
+        Territory territoryB = new Territory("B",new NodeJson(51,51),new NodeJson(101,101));
         territoryB.setArea(2500L);
         territoryB.setPaintedArea(0L);
         territories.add(territoryB);

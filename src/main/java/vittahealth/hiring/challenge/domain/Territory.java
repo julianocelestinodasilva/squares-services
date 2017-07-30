@@ -25,10 +25,12 @@ public class Territory {
     private String name;
 
     @Column
-    private String startArea;
+    @Type(type = "NodeJsonType")
+    private NodeJson startArea;
 
     @Column
-    private String endArea;
+    @Type(type = "NodeJsonType")
+    private NodeJson endArea;
 
     @Column
     private Long area;
@@ -36,22 +38,11 @@ public class Territory {
     @Column
     private Long paintedArea;
 
-    @Column
-    @Type(type = "NodeJsonType")
-    private NodeJson testEndArea;
-
     public Territory() {
     }
 
-    public NodeJson getTestEndArea() {
-        return testEndArea;
-    }
 
-    public void setTestEndArea(NodeJson testEndArea) {
-        this.testEndArea = testEndArea;
-    }
-
-    public Territory(String name, String startArea, String endArea) {
+    public Territory(String name, NodeJson startArea, NodeJson endArea) {
         this.name = name;
         this.startArea = startArea;
         this.endArea = endArea;
@@ -73,19 +64,19 @@ public class Territory {
         this.name = name;
     }
 
-    public String getStartArea() {
+    public NodeJson getStartArea() {
         return startArea;
     }
 
-    public void setStartArea(String startArea) {
+    public void setStartArea(NodeJson startArea) {
         this.startArea = startArea;
     }
 
-    public String getEndArea() {
+    public NodeJson getEndArea() {
         return endArea;
     }
 
-    public void setEndArea(String endArea) {
+    public void setEndArea(NodeJson endArea) {
         this.endArea = endArea;
     }
 
