@@ -15,7 +15,6 @@ import java.sql.Types;
 
 public class NodeJsonType implements UserType {
 
-
     @Override
     public Object deepCopy(final Object value) throws HibernateException {
         try {
