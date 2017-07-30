@@ -1,6 +1,7 @@
 package vittahealth.hiring.challenge;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import spark.Spark;
 import spark.servlet.SparkApplication;
 import vittahealth.hiring.challenge.domain.Territory;
@@ -33,6 +34,9 @@ public class TerritoryEndPoint implements SparkApplication {
         if (territories == null || territories.size() < 1) {
             Spark.halt(404, new Gson().toJson(new MessageReturn("territories not found")));
         }
-        return new Gson().toJson(territories);
+        GsonBuilder gson = new GsonBuilder();
+        gson.registerTypeAdapter(Territory.class, new TerritorySerializer());
+        final Gson parser = gson.create();
+        return parser.toJson(territories);
     }
 }
