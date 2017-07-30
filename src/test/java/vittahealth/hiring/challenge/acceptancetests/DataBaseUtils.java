@@ -64,4 +64,11 @@ public class DataBaseUtils {
         session.getTransaction().commit();
         return territories;
     }
+
+    public static void deleteTerritories() throws IOException {
+        final Session session = JPAUtil.session();
+        session.getTransaction().begin();
+        session.createNativeQuery("DELETE FROM Territory").executeUpdate();
+        session.getTransaction().commit();
+    }
 }

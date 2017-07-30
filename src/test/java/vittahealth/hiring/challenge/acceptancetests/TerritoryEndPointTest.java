@@ -75,6 +75,15 @@ public class TerritoryEndPointTest {
         expectTerritoryZeroFirst();
     }
 
+    @Test
+    public void should_return_territories_not_found() throws Exception {
+        DataBaseUtils.deleteTerritories();
+        logger.log(Level.INFO, url);
+        expect().statusCode(404).
+                body("messageReturn", equalTo("territories not found")).
+                when().get(url);
+    }
+
     private void expectTerritoryZeroFirst() {
         logger.log(Level.INFO, url);
         expect().statusCode(200).
