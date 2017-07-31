@@ -1,6 +1,7 @@
 package vittahealth.hiring.challenge.acceptancetests;
 
 
+import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.Test;
 import vittahealth.hiring.challenge.domain.Node;
@@ -50,18 +51,14 @@ public class TerritoryEndPointTest {
                 body("size()", is(territories.size())).
                 body("get(0).id", equalTo(territory1.getId().intValue())).
                 body("get(0).name", equalTo(territory1.getName())).
-                body("get(0).startArea.x", equalTo(territory1.getStartArea().getX())).
-                body("get(0).startArea.y", equalTo(territory1.getStartArea().getY())).
-                body("get(0).endArea.x", equalTo(territory1.getEndArea().getX())).
-                body("get(0).endArea.y", equalTo(territory1.getEndArea().getY())).
+                body("get(0).start", equalTo(new Gson().toJson(territory1.getStartArea()))).
+                body("get(0).end", equalTo(new Gson().toJson(territory1.getEndArea()))).
                 body("get(0).area", equalTo(territory1.area().intValue())).
                 body("get(0).paintedArea", equalTo(territory1.getPaintedArea().intValue())).
                 body("get(1).id", equalTo(territory0.getId().intValue())).
                 body("get(1).name", equalTo(territory0.getName())).
-                body("get(1).startArea.x", equalTo(territory0.getStartArea().getX())).
-                body("get(1).startArea.y", equalTo(territory0.getStartArea().getY())).
-                body("get(1).endArea.x", equalTo(territory0.getEndArea().getX())).
-                body("get(1).endArea.y", equalTo(territory0.getEndArea().getY())).
+                body("get(1).start", equalTo(new Gson().toJson(territory0.getStartArea()))).
+                body("get(1).end", equalTo(new Gson().toJson(territory0.getEndArea()))).
                 body("get(1).area", equalTo(territory0.area().intValue())).
                 body("get(1).paintedArea", equalTo(territory0.getPaintedArea().intValue())).
                 when().get(url);
@@ -90,18 +87,14 @@ public class TerritoryEndPointTest {
                 body("size()", is(territories.size())).
                 body("get(0).id", equalTo(territory0.getId().intValue())).
                 body("get(0).name", equalTo(territory0.getName())).
-                body("get(0).startArea.x", equalTo(territory0.getStartArea().getX())).
-                body("get(0).startArea.y", equalTo(territory0.getStartArea().getY())).
-                body("get(0).endArea.x", equalTo(territory0.getEndArea().getX())).
-                body("get(0).endArea.y", equalTo(territory0.getEndArea().getY())).
+                body("get(0).start", equalTo(new Gson().toJson(territory0.getStartArea()))).
+                body("get(0).end", equalTo(new Gson().toJson(territory0.getEndArea()))).
                 body("get(0).area", equalTo(territory0.area().intValue())).
                 body("get(0).paintedArea", equalTo(territory0.getPaintedArea().intValue())).
                 body("get(1).id", equalTo(territory1.getId().intValue())).
                 body("get(1).name", equalTo(territory1.getName())).
-                body("get(1).startArea.x", equalTo(territory1.getStartArea().getX())).
-                body("get(1).startArea.y", equalTo(territory1.getStartArea().getY())).
-                body("get(1).endArea.x", equalTo(territory1.getEndArea().getX())).
-                body("get(1).endArea.y", equalTo(territory1.getEndArea().getY())).
+                body("get(1).start", equalTo(new Gson().toJson(territory1.getStartArea()))).
+                body("get(1).end", equalTo(new Gson().toJson(territory1.getEndArea()))).
                 body("get(1).area", equalTo(territory1.area().intValue())).
                 body("get(1).paintedArea", equalTo(territory1.getPaintedArea().intValue())).
                 when().get(url);
