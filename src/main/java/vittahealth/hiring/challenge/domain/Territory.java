@@ -18,7 +18,7 @@ public class Territory {
     @Id
     @GeneratedValue(generator = "territory")
     @GenericGenerator(name = "territory", strategy = "increment")
-    private Long id;
+    private long id;
 
     @Column
     private String name;
@@ -32,13 +32,13 @@ public class Territory {
     private Node endArea;
 
     @Column
-    private Long paintedArea;
+    private long paintedArea;
 
-    public Long proportionalPaintedArea() {
+    public long proportionalPaintedArea() {
         return ((Float) ((new Float(paintedArea) / new Float(area())) * 100)).longValue();
     }
 
-    public Long area() {
+    public long area() {
         return startArea.area() + endArea.area();
     }
 
@@ -52,11 +52,11 @@ public class Territory {
         this.endArea = endArea;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -84,11 +84,11 @@ public class Territory {
         this.endArea = endArea;
     }
 
-    public Long getPaintedArea() {
+    public long getPaintedArea() {
         return paintedArea;
     }
 
-    public void setPaintedArea(Long paintedArea) {
+    public void setPaintedArea(long paintedArea) {
         this.paintedArea = paintedArea;
     }
 }

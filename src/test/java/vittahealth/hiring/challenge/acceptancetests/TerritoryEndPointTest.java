@@ -45,7 +45,7 @@ public class TerritoryEndPointTest {
         assertEquals(territoryToCreate.getName(),jsonResponse.getString("name"));
         assertEquals(new Gson().toJson(territoryToCreate.getStartArea()),jsonResponse.get("start"));
         assertEquals(new Gson().toJson(territoryToCreate.getEndArea()),jsonResponse.get("end"));
-        assertEquals(territoryToCreate.area().longValue(),jsonResponse.getLong("area"));
+        assertEquals(territoryToCreate.area(),jsonResponse.getLong("area"));
     }
 
     @Test
@@ -68,18 +68,18 @@ public class TerritoryEndPointTest {
         logger.log(Level.INFO, url);
         expect().statusCode(200).
                 body("size()", is(territories.size())).
-                body("get(0).id", equalTo(territory1.getId().intValue())).
+                body("get(0).id", equalTo(Long.valueOf(territory1.getId()).intValue())).
                 body("get(0).name", equalTo(territory1.getName())).
                 body("get(0).start", equalTo(new Gson().toJson(territory1.getStartArea()))).
                 body("get(0).end", equalTo(new Gson().toJson(territory1.getEndArea()))).
-                body("get(0).area", equalTo(territory1.area().intValue())).
-                body("get(0).paintedArea", equalTo(territory1.getPaintedArea().intValue())).
-                body("get(1).id", equalTo(territory0.getId().intValue())).
+                body("get(0).area", equalTo(Long.valueOf(territory1.area()).intValue())).
+                body("get(0).paintedArea", equalTo(Long.valueOf(territory1.getPaintedArea()).intValue())).
+                body("get(1).id", equalTo(Long.valueOf(territory0.getId()).intValue())).
                 body("get(1).name", equalTo(territory0.getName())).
                 body("get(1).start", equalTo(new Gson().toJson(territory0.getStartArea()))).
                 body("get(1).end", equalTo(new Gson().toJson(territory0.getEndArea()))).
-                body("get(1).area", equalTo(territory0.area().intValue())).
-                body("get(1).paintedArea", equalTo(territory0.getPaintedArea().intValue())).
+                body("get(1).area", equalTo(Long.valueOf(territory0.area()).intValue())).
+                body("get(1).paintedArea", equalTo(Long.valueOf(territory0.getPaintedArea()).intValue())).
                 when().get(url);
     }
 
@@ -104,18 +104,18 @@ public class TerritoryEndPointTest {
         logger.log(Level.INFO, url);
         expect().statusCode(200).
                 body("size()", is(territories.size())).
-                body("get(0).id", equalTo(territory0.getId().intValue())).
+                body("get(0).id", equalTo(Long.valueOf(territory0.getId()).intValue())).
                 body("get(0).name", equalTo(territory0.getName())).
                 body("get(0).start", equalTo(new Gson().toJson(territory0.getStartArea()))).
                 body("get(0).end", equalTo(new Gson().toJson(territory0.getEndArea()))).
-                body("get(0).area", equalTo(territory0.area().intValue())).
-                body("get(0).paintedArea", equalTo(territory0.getPaintedArea().intValue())).
-                body("get(1).id", equalTo(territory1.getId().intValue())).
+                body("get(0).area", equalTo(Long.valueOf(territory0.area()).intValue())).
+                body("get(0).paintedArea", equalTo(Long.valueOf(territory0.getPaintedArea()).intValue())).
+                body("get(1).id", equalTo(Long.valueOf(territory1.getId()).intValue())).
                 body("get(1).name", equalTo(territory1.getName())).
                 body("get(1).start", equalTo(new Gson().toJson(territory1.getStartArea()))).
                 body("get(1).end", equalTo(new Gson().toJson(territory1.getEndArea()))).
-                body("get(1).area", equalTo(territory1.area().intValue())).
-                body("get(1).paintedArea", equalTo(territory1.getPaintedArea().intValue())).
+                body("get(1).area", equalTo(Long.valueOf(territory1.area()).intValue())).
+                body("get(1).paintedArea", equalTo(Long.valueOf(territory1.getPaintedArea()).intValue())).
                 when().get(url);
     }
 }
