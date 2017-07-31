@@ -40,8 +40,14 @@ public class TerritoryTest {
         final Node start = new Node(0,0);
         final Node end = new Node(10,10);
         final long paintedArea = 50L;
+        int i = 1;
+        List<Node> squaresToPaint = new ArrayList<Node>();
+        while (i <= paintedArea) {
+            squaresToPaint.add(new Node(i,i+1));
+            i++;
+        }
         final int expectedProportionalPaintedArea = 50;
-        //TODO assertProportionalPaintedArea(start, end, paintedArea, expectedProportionalPaintedArea);
+        assertProportionalPaintedArea(start, end,expectedProportionalPaintedArea,squaresToPaint);
     }
 
     @Test
