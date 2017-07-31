@@ -36,16 +36,12 @@ public class TerritoryEndPointTest {
 
     @Test
     public void get_territory_by_id_withpainted() throws Exception {
-
         Territory territory = new Territory("A",new Node(0,0),new Node(50,50));
         DataBase.persistTerritory(territory);
-
         List<Node> expectedPaintedSquaresList = new ArrayList<Node>();
         expectedPaintedSquaresList.add(new Node(1,2));
         expectedPaintedSquaresList.add(new Node(2,3));
-
         url +=  "/1?withPainted=true";
-
         logger.log(Level.INFO, url);
         expect().statusCode(200).
                 body("id", equalTo(Long.valueOf(territory.getId()).intValue())).
@@ -54,8 +50,10 @@ public class TerritoryEndPointTest {
                 body("end", equalTo(new Gson().toJson(territory.getEndArea()))).
                 body("area", equalTo(Long.valueOf(territory.area()).intValue())).
                 body("paintedArea", equalTo(expectedPaintedSquaresList.size())).
+
                 /*body("paintedSquares.get(0)", equalTo(expectedPaintedSquaresList.get(0))).
                 body("paintedSquares.get(1)", equalTo(expectedPaintedSquaresList.get(1))).*/
+
                 when().get(url);
     }
 
@@ -101,9 +99,9 @@ public class TerritoryEndPointTest {
     @Test
     public void list_territories_ordered_by_most_proportional_painted_area() throws Exception {
         territory0 = new Territory("A",new Node(0,0),new Node(10,10));
-        territory0.setPaintedArea(95L);
+        // territory0.setPaintedArea(95L);
         territory1 = new Territory("B",new Node(0,0),new Node(50,50));
-        territory1.setPaintedArea(100L);
+        // territory1.setPaintedArea(100L);
         territories = DataBase.persistTerritories(territory1,territory0);
         url +=  "?order=mostProportionalPaintedArea";
         expectTerritoryZeroFirst();

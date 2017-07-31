@@ -10,6 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @TypeDefs( {@TypeDef( name= "NodeJsonType", typeClass = NodeJsonType.class)})
@@ -32,7 +34,25 @@ public class Territory {
     private Node endArea;
 
     @Column
-    private long paintedArea;
+    @Type(type = "NodeJsonType")
+    private List<Node> paintedSquares;
+
+    public void paint (Node squareToPain) {
+        if (paintedSquares == null) {
+            paintedSquares = new ArrayList<Node>();
+        }
+        if (!paintedSquares.contains(squareToPain)) {
+            paintedSquares.add(squareToPain);
+        }
+    }
+
+    public long getPaintedArea() {
+        if (paintedSquares == null) {
+            return 0;
+        } else {
+            return paintedSquares.size();
+        }
+    }
 
     public boolean isSameArea(Territory other) {
         return (startArea.equals(other.getStartArea())
@@ -40,22 +60,20 @@ public class Territory {
     }
 
     public long proportionalPaintedArea() {
-        return ((Float) ((new Float(paintedArea) / new Float(area())) * 100)).longValue();
+        return ((Float) ((new Float(getPaintedArea()) / new Float(area())) * 100)).longValue();
     }
 
     public long area() {
         return startArea.area() + endArea.area();
     }
 
-    public Territory() {
-    }
-
-
     public Territory(String name, Node startArea, Node endArea) {
         this.name = name;
         this.startArea = startArea;
         this.endArea = endArea;
     }
+
+    public Territory() {}
 
     public long getId() {
         return id;
@@ -89,11 +107,11 @@ public class Territory {
         this.endArea = endArea;
     }
 
-    public long getPaintedArea() {
-        return paintedArea;
+    public List<Node> getPaintedSquares() {
+        return paintedSquares;
     }
 
-    public void setPaintedArea(long paintedArea) {
-        this.paintedArea = paintedArea;
+    public void setPaintedSquares(List<Node> paintedSquares) {
+        this.paintedSquares = paintedSquares;
     }
 }

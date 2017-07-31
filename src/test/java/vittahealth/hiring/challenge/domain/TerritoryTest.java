@@ -3,6 +3,9 @@ package vittahealth.hiring.challenge.domain;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -22,8 +25,14 @@ public class TerritoryTest {
         final Node start = new Node(0,0);
         final Node end = new Node(50,50);
         final long paintedArea = 2500L;
+        int i = 1;
+        List<Node> squaresToPaint = new ArrayList<Node>();
+        while (i <= paintedArea) {
+            squaresToPaint.add(new Node(i,i+1));
+            i++;
+        }
         final int expectedProportionalPaintedArea = 100;
-        assertProportionalPaintedArea(start, end, paintedArea, expectedProportionalPaintedArea);
+        assertProportionalPaintedArea(start, end, expectedProportionalPaintedArea,squaresToPaint);
     }
 
     @Test
@@ -32,7 +41,7 @@ public class TerritoryTest {
         final Node end = new Node(10,10);
         final long paintedArea = 50L;
         final int expectedProportionalPaintedArea = 50;
-        assertProportionalPaintedArea(start, end, paintedArea, expectedProportionalPaintedArea);
+        //TODO assertProportionalPaintedArea(start, end, paintedArea, expectedProportionalPaintedArea);
     }
 
     @Test
@@ -51,9 +60,11 @@ public class TerritoryTest {
         area(expectedArea, start, end);
     }
 
-    private void assertProportionalPaintedArea(Node start, Node end, long paintedArea, int expectedProportionalPaintedArea) {
+    private void assertProportionalPaintedArea(Node start, Node end, int expectedProportionalPaintedArea, List<Node> squaresToPaint) {
         Territory territory = new Territory("TerritoryTest",start,end);
-        territory.setPaintedArea(paintedArea);
+        for (Node suareToPain : squaresToPaint) {
+            territory.paint(suareToPain);
+        }
         long proportionalPaintedArea = territory.proportionalPaintedArea();
         assertEquals(expectedProportionalPaintedArea,proportionalPaintedArea);
     }
