@@ -12,6 +12,15 @@ import java.util.List;
 
 public class DataBaseUtils {
 
+    public static void persistTerritory(Territory territory) throws IOException {
+        final Session session = JPAUtil.session();
+        session.getTransaction().begin();
+        session.createNativeQuery("DELETE FROM Territory").executeUpdate();
+        session.persist(territory);
+        session.flush();
+        session.getTransaction().commit();
+    }
+
     public static List<Territory> persistTerritories(Territory territoryA, Territory territoryB) throws IOException {
         List<Territory> territories = new ArrayList<Territory>();
         territories.add(territoryA);

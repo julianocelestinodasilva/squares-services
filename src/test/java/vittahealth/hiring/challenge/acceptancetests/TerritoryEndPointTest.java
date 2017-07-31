@@ -34,6 +34,16 @@ public class TerritoryEndPointTest {
     }
 
     @Test
+    public void should_return_territory_overlay() throws Exception {
+        DataBaseUtils.persistTerritory(new Territory("A",new Node(10,10),new Node(50,50)));
+        Territory territoryToCreate = new Territory("B",new Node(10,10),new Node(50,50));
+        Response response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
+        assertEquals(400,response.getStatusCode());
+        final JsonPath jsonResponse = response.jsonPath();
+        assertEquals("this new territory overlays another territory",jsonResponse.getString("messageReturn"));
+    }
+
+    @Test
     public void should_add_a_territory() throws Exception {
         DataBaseUtils.deleteTerritories();
         logger.log(Level.INFO, url);
