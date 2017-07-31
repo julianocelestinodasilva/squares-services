@@ -34,13 +34,30 @@ public class TerritoryEndPointTest {
     }
 
     @Test
-    public void should_return_territory_overlay() throws Exception {
+    public void should_return_error_incomplete_data() throws Exception {
+        Territory territoryToCreate = new Territory();
+        Response response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
+        assertError(response, 400, "misses the start, end or name fields!");
+
+        territoryToCreate = new Territory("",null,null);
+        response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
+        assertError(response, 400, "misses the start, end or name fields!");
+
+        territoryToCreate = new Territory(null,new Node(),null);
+        response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
+        assertError(response, 400, "misses the start, end or name fields!");
+
+        territoryToCreate = new Territory(null,null,new Node());
+        response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
+        assertError(response, 400, "misses the start, end or name fields!");
+    }
+
+    @Test
+    public void should_return_error_territory_overlay() throws Exception {
         DataBase.persistTerritory(new Territory("A",new Node(10,10),new Node(50,50)));
         Territory territoryToCreate = new Territory("B",new Node(10,10),new Node(50,50));
         Response response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
-        assertEquals(400,response.getStatusCode());
-        final JsonPath jsonResponse = response.jsonPath();
-        assertEquals("this new territory overlays another territory",jsonResponse.getString("messageReturn"));
+        assertError(response, 400, "this new territory overlays another territory");
     }
 
     @Test
@@ -108,6 +125,12 @@ public class TerritoryEndPointTest {
         expect().statusCode(404).
                 body("messageReturn", equalTo("territories not found")).
                 when().get(url);
+    }
+
+    private void assertError(Response response, int statusCode, String errorMessage) {
+        assertEquals(statusCode,response.getStatusCode());
+        final JsonPath jsonResponse = response.jsonPath();
+        assertEquals(errorMessage,jsonResponse.getString("messageReturn"));
     }
 
     private void expectTerritoryZeroFirst() {

@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import org.eclipse.jetty.http.HttpStatus;
 import spark.Spark;
 import spark.servlet.SparkApplication;
+import vittahealth.hiring.challenge.domain.IncompleteDataException;
 import vittahealth.hiring.challenge.domain.Territory;
 import vittahealth.hiring.challenge.domain.TerritoryOverlaysException;
 import vittahealth.hiring.challenge.domain.TerritoryRepository;
@@ -44,7 +45,7 @@ public class TerritoryEndPoint implements SparkApplication {
             try {
                 new TerritoryRepository().create(territory);
                 response.status(HttpStatus.CREATED_201);
-            } catch (TerritoryOverlaysException e) {
+            } catch (IncompleteDataException | TerritoryOverlaysException e) {
                 Spark.halt(HttpStatus.BAD_REQUEST_400, new Gson().toJson(new MessageReturn(e.getMessage())));
             }
             return json(territory);

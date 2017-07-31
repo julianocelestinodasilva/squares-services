@@ -1,1 +1,0 @@
-insert into territory values (1,2500,'x: 50, y: 50','A',0,'x: 0, y: 0');

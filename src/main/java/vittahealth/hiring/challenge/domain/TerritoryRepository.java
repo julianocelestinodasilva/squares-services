@@ -12,8 +12,10 @@ public class TerritoryRepository {
 
     private static final String GET_ALL_TERRITORIES = "SELECT * FROM territory u";
 
-    public void create(Territory newTerritory) throws TerritoryOverlaysException {
-        // TODO verifyFieldsNotNull(territory)  -  if it misses the start, end or name fields!;
+    public void create(Territory newTerritory) throws TerritoryOverlaysException,IncompleteDataException {
+        if (incompleteData(newTerritory)) {
+            throw new IncompleteDataException();
+        }
         final Session session = session();
         final List<Territory> allTerritories = session.createNativeQuery(GET_ALL_TERRITORIES, Territory.class).list(); // TODO se tiver muitos dados
         verifyTerritoryOverlays(newTerritory, allTerritories);
@@ -46,6 +48,18 @@ public class TerritoryRepository {
         if (territoriesWithSameArea != null && !territoriesWithSameArea.isEmpty()) {
             throw new TerritoryOverlaysException();
         }
+    }
+
+    private boolean incompleteData(Territory territory) {
+        boolean incompleteData = false;
+        if (territory.getName() == null || territory.getName().equals("")) {
+            incompleteData = true;
+        } else if (territory.getStartArea() == null) {
+            incompleteData = true;
+        } else if (territory.getEndArea() == null) {
+            incompleteData = true;
+        }
+        return incompleteData;
     }
 
 }
