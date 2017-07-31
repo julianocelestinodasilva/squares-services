@@ -9,6 +9,7 @@ import org.junit.Test;
 import vittahealth.hiring.challenge.domain.Node;
 import vittahealth.hiring.challenge.domain.Territory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +32,31 @@ public class TerritoryEndPointTest {
     @Before
     public void setUp() throws Exception {
         url = URLApi.territories();
+    }
+
+    @Test
+    public void get_territory_by_id_withpainted() throws Exception {
+
+        Territory territory = new Territory("A",new Node(0,0),new Node(50,50));
+        DataBase.persistTerritory(territory);
+
+        List<Node> expectedPaintedSquaresList = new ArrayList<Node>();
+        expectedPaintedSquaresList.add(new Node(1,2));
+        expectedPaintedSquaresList.add(new Node(2,3));
+
+        url +=  "/1?withPainted=true";
+
+        logger.log(Level.INFO, url);
+        expect().statusCode(200).
+                body("id", equalTo(Long.valueOf(territory.getId()).intValue())).
+                body("name", equalTo(territory.getName())).
+                body("start", equalTo(new Gson().toJson(territory.getStartArea()))).
+                body("end", equalTo(new Gson().toJson(territory.getEndArea()))).
+                body("area", equalTo(Long.valueOf(territory.area()).intValue())).
+                body("paintedArea", equalTo(expectedPaintedSquaresList.size())).
+                body("paintedSquares.get(0)", equalTo(expectedPaintedSquaresList.get(0))).
+                body("paintedSquares.get(1)", equalTo(expectedPaintedSquaresList.get(1))).
+                when().get(url);
     }
 
     @Test
