@@ -15,25 +15,21 @@ public class TerritoryRepository {
     public void create(Territory newTerritory) throws TerritoryOverlaysException {
         // TODO verifyFieldsNotNull(territory);
         final Session session = session();
-
         final List<Territory> allTerritories = session.createNativeQuery(GET_ALL_TERRITORIES, Territory.class).list(); // TODO se tiver muitos dados
-        List<Territory> territoriesWithSameArea = allTerritories.stream()
-
-                // TODO meotodo em territory
-                .filter(item -> item.area() == newTerritory.area() )
-                .filter(item -> item.getStartArea().equals(newTerritory.getStartArea()))
-                .filter(item -> item.getEndArea().equals(newTerritory.getEndArea()))
-
-                .collect(Collectors.toList());
-
+        List<Territory> territoriesWithSameArea = sameArea(newTerritory, allTerritories);
         if (territoriesWithSameArea != null && !territoriesWithSameArea.isEmpty()) {
             throw new TerritoryOverlaysException();
         }
-
         session.getTransaction().begin();
         session.persist(newTerritory);
         session.getTransaction().commit();
         session.close();
+    }
+
+    private List<Territory> sameArea(Territory newTerritory, List<Territory> allTerritories) {
+        return allTerritories.stream()
+                .filter(territory -> territory.isSameArea(newTerritory))
+                .collect(Collectors.toList());
     }
 
     public List<Territory> find() {

@@ -34,6 +34,11 @@ public class Territory {
     @Column
     private long paintedArea;
 
+    public boolean isSameArea(Territory other) {
+        return (startArea.equals(other.getStartArea())
+                && endArea.equals(other.getEndArea()));
+    }
+
     public long proportionalPaintedArea() {
         return ((Float) ((new Float(paintedArea) / new Float(area())) * 100)).longValue();
     }
