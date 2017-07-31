@@ -2,9 +2,11 @@ package vittahealth.hiring.challenge;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.eclipse.jetty.http.HttpStatus;
 import spark.Spark;
 import spark.servlet.SparkApplication;
 import vittahealth.hiring.challenge.domain.Territory;
+import vittahealth.hiring.challenge.domain.TerritoryOverlaysException;
 import vittahealth.hiring.challenge.domain.TerritoryRepository;
 
 import java.util.Comparator;
@@ -39,23 +41,26 @@ public class TerritoryEndPoint implements SparkApplication {
             final String body = request.body();
             Gson gson = new Gson();
             final Territory territory = gson.fromJson(body, Territory.class);
-            new TerritoryRepository().create(territory);
-            response.status(201);
-            return parserToJson(territory);
+            try {
+                new TerritoryRepository().create(territory);
+                response.status(HttpStatus.CREATED_201);
+            } catch (TerritoryOverlaysException e) {
+                Spark.halt(HttpStatus.BAD_REQUEST_400, new Gson().toJson(new MessageReturn(e.getMessage())));
+            }
+            return json(territory);
         });
     }
 
     private Object returnTerritories(List<Territory> territories) {
         if (territories == null || territories.isEmpty()) {
-            Spark.halt(404, new Gson().toJson(new MessageReturn(TERRITORIES_NOT_FOUND)));
+            Spark.halt(HttpStatus.NOT_FOUND_404, new Gson().toJson(new MessageReturn(TERRITORIES_NOT_FOUND)));
         }
-        return parserToJson(territories);
+        return json(territories);
     }
 
-    private Object parserToJson(Object toJson) {
-        GsonBuilder gson = new GsonBuilder();
-        gson.registerTypeAdapter(Territory.class, new TerritorySerializer());
-        final Gson parser = gson.create();
-        return parser.toJson(toJson);
+    private Object json(Object toJson) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(Territory.class, new TerritorySerializer());
+        return gsonBuilder.create().toJson(toJson);
     }
 }

@@ -35,7 +35,7 @@ public class TerritoryEndPointTest {
 
     @Test
     public void should_return_territory_overlay() throws Exception {
-        DataBaseUtils.persistTerritory(new Territory("A",new Node(10,10),new Node(50,50)));
+        DataBase.persistTerritory(new Territory("A",new Node(10,10),new Node(50,50)));
         Territory territoryToCreate = new Territory("B",new Node(10,10),new Node(50,50));
         Response response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
         assertEquals(400,response.getStatusCode());
@@ -45,7 +45,7 @@ public class TerritoryEndPointTest {
 
     @Test
     public void should_add_a_territory() throws Exception {
-        DataBaseUtils.deleteTerritories();
+        DataBase.deleteTerritories();
         logger.log(Level.INFO, url);
         Territory territoryToCreate = new Territory("A",new Node(0,0),new Node(50,50));
         Response response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
@@ -64,14 +64,14 @@ public class TerritoryEndPointTest {
         territory0.setPaintedArea(95L);
         territory1 = new Territory("B",new Node(0,0),new Node(50,50));
         territory1.setPaintedArea(100L);
-        territories = DataBaseUtils.persistTerritories(territory1,territory0);
+        territories = DataBase.persistTerritories(territory1,territory0);
         url +=  "?order=mostProportionalPaintedArea";
         expectTerritoryZeroFirst();
     }
 
     @Test
     public void list_territories_ordered_by_most_painted_area() throws Exception {
-        territories = DataBaseUtils.persistTerritories(500L);
+        territories = DataBase.persistTerritories(500L);
         territory0 = territories.get(0);
         territory1 = territories.get(1);
         url +=  "?order=mostPaintedArea";
@@ -95,7 +95,7 @@ public class TerritoryEndPointTest {
 
     @Test
     public void get_all_territories() throws Exception {
-        territories = DataBaseUtils.persistTerritories();
+        territories = DataBase.persistTerritories();
         territory0 = territories.get(0);
         territory1 = territories.get(1);
         expectTerritoryZeroFirst();
@@ -103,7 +103,7 @@ public class TerritoryEndPointTest {
 
     @Test
     public void should_return_territories_not_found() throws Exception {
-        DataBaseUtils.deleteTerritories();
+        DataBase.deleteTerritories();
         logger.log(Level.INFO, url);
         expect().statusCode(404).
                 body("messageReturn", equalTo("territories not found")).

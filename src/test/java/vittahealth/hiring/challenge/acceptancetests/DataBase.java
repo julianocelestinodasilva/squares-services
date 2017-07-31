@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DataBaseUtils {
+public class DataBase {
 
     public static void persistTerritory(Territory territory) throws IOException {
         final Session session = JPAUtil.session();
