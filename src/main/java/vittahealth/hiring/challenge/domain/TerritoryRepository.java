@@ -13,23 +13,14 @@ public class TerritoryRepository {
     private static final String GET_ALL_TERRITORIES = "SELECT * FROM territory u";
 
     public void create(Territory newTerritory) throws TerritoryOverlaysException {
-        // TODO verifyFieldsNotNull(territory);
+        // TODO verifyFieldsNotNull(territory)  -  if it misses the start, end or name fields!;
         final Session session = session();
         final List<Territory> allTerritories = session.createNativeQuery(GET_ALL_TERRITORIES, Territory.class).list(); // TODO se tiver muitos dados
-        List<Territory> territoriesWithSameArea = sameArea(newTerritory, allTerritories);
-        if (territoriesWithSameArea != null && !territoriesWithSameArea.isEmpty()) {
-            throw new TerritoryOverlaysException();
-        }
+        verifyTerritoryOverlays(newTerritory, allTerritories);
         session.getTransaction().begin();
         session.persist(newTerritory);
         session.getTransaction().commit();
         session.close();
-    }
-
-    private List<Territory> sameArea(Territory newTerritory, List<Territory> allTerritories) {
-        return allTerritories.stream()
-                .filter(territory -> territory.isSameArea(newTerritory))
-                .collect(Collectors.toList());
     }
 
     public List<Territory> find() {
@@ -47,4 +38,14 @@ public class TerritoryRepository {
         session.close();
         return territories;
     }
+
+    private void verifyTerritoryOverlays(Territory newTerritory, List<Territory> allTerritories) throws TerritoryOverlaysException {
+        List<Territory> territoriesWithSameArea = allTerritories.stream()
+                .filter(territory -> territory.isSameArea(newTerritory))
+                .collect(Collectors.toList());
+        if (territoriesWithSameArea != null && !territoriesWithSameArea.isEmpty()) {
+            throw new TerritoryOverlaysException();
+        }
+    }
+
 }
