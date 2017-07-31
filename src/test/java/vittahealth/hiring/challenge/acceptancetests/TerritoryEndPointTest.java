@@ -38,15 +38,12 @@ public class TerritoryEndPointTest {
         Territory territoryToCreate = new Territory();
         Response response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
         assertError(response, 400, "misses the start, end or name fields!");
-
         territoryToCreate = new Territory("",null,null);
         response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
         assertError(response, 400, "misses the start, end or name fields!");
-
         territoryToCreate = new Territory(null,new Node(),null);
         response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
         assertError(response, 400, "misses the start, end or name fields!");
-
         territoryToCreate = new Territory(null,null,new Node());
         response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
         assertError(response, 400, "misses the start, end or name fields!");
