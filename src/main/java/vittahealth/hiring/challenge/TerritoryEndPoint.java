@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 
 public class TerritoryEndPoint implements SparkApplication {
 
@@ -33,15 +34,28 @@ public class TerritoryEndPoint implements SparkApplication {
             }
             return returnTerritories(territories);
         });
+        post("/territories", (request, response) -> {
+            response.type("application/json");
+            final String body = request.body();
+            Gson gson = new Gson();
+            final Territory territory = gson.fromJson(body, Territory.class);
+            new TerritoryRepository().create(territory);
+            response.status(201);
+            return parserToJson(territory);
+        });
     }
 
     private Object returnTerritories(List<Territory> territories) {
         if (territories == null || territories.isEmpty()) {
             Spark.halt(404, new Gson().toJson(new MessageReturn(TERRITORIES_NOT_FOUND)));
         }
+        return parserToJson(territories);
+    }
+
+    private Object parserToJson(Object toJson) {
         GsonBuilder gson = new GsonBuilder();
         gson.registerTypeAdapter(Territory.class, new TerritorySerializer());
         final Gson parser = gson.create();
-        return parser.toJson(territories);
+        return parser.toJson(toJson);
     }
 }

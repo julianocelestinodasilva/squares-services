@@ -11,6 +11,15 @@ public class TerritoryRepository {
 
     private static final String GET_ALL_TERRITORIES = "SELECT * FROM territory u";
 
+    public void create(Territory territory) {
+        // TODO verifyFieldsNotNull(territory);
+        final Session session = session();
+        session.getTransaction().begin();
+        session.persist(territory);
+        session.getTransaction().commit();
+        session.close();
+    }
+
     public List<Territory> find() {
         final Session session = session();
         Query<Territory> query = session.createNativeQuery(GET_ALL_TERRITORIES, Territory.class);

@@ -38,10 +38,14 @@ public class TerritoryEndPointTest {
         DataBaseUtils.deleteTerritories();
         logger.log(Level.INFO, url);
         Territory territoryToCreate = new Territory("A",new Node(0,0),new Node(50,50));
-        Response response = given().contentType("application/json").and().body(territoryToCreate.toString()).post(url);
+        Response response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
         assertEquals(201,response.getStatusCode());
         final JsonPath jsonResponse = response.jsonPath();
         assertEquals(1,jsonResponse.getLong("id"));
+        assertEquals(territoryToCreate.getName(),jsonResponse.getString("name"));
+        assertEquals(new Gson().toJson(territoryToCreate.getStartArea()),jsonResponse.get("start"));
+        assertEquals(new Gson().toJson(territoryToCreate.getEndArea()),jsonResponse.get("end"));
+        assertEquals(territoryToCreate.area().longValue(),jsonResponse.getLong("area"));
     }
 
     @Test
