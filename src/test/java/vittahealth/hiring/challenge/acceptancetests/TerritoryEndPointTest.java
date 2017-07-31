@@ -2,6 +2,8 @@ package vittahealth.hiring.challenge.acceptancetests;
 
 
 import com.google.gson.Gson;
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
 import vittahealth.hiring.challenge.domain.Node;
@@ -12,8 +14,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static io.restassured.RestAssured.expect;
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
 
 public class TerritoryEndPointTest {
 
@@ -27,6 +31,17 @@ public class TerritoryEndPointTest {
     @Before
     public void setUp() throws Exception {
         url = URLApi.territories();
+    }
+
+    @Test
+    public void should_add_a_territory() throws Exception {
+        DataBaseUtils.deleteTerritories();
+        logger.log(Level.INFO, url);
+        Territory territoryToCreate = new Territory("A",new Node(0,0),new Node(50,50));
+        Response response = given().contentType("application/json").and().body(territoryToCreate.toString()).post(url);
+        assertEquals(201,response.getStatusCode());
+        final JsonPath jsonResponse = response.jsonPath();
+        assertEquals(1,jsonResponse.getLong("id"));
     }
 
     @Test
