@@ -22,9 +22,18 @@ public class TerritoryEndPoint implements SparkApplication {
     private static final String ORDER_BY_MOST_PROPORTIONAL_PAINTED_AREA = "mostProportionalPaintedArea";
 
     private static final String TERRITORIES_NOT_FOUND = "territories not found";
+    private static final String TERRITORY_NOT_FOUND = "territory not found";
 
     @Override
     public void init() {
+
+        get("/territories/:id", (request, response) -> {
+            response.type("application/json");
+            Long id = Long.valueOf(request.params(":id"));
+            Territory territory = new TerritoryRepository().find(id);
+            return returnTerritory(territory);
+        });
+
         get("/territories", (request, response) -> {
             response.type("application/json");
             final String order = request.queryParams("order");
@@ -37,11 +46,10 @@ public class TerritoryEndPoint implements SparkApplication {
             }
             return returnTerritories(territories);
         });
+
         post("/territories", (request, response) -> {
             response.type("application/json");
-            final String body = request.body();
-            Gson gson = new Gson();
-            final Territory territory = gson.fromJson(body, Territory.class);
+            final Territory territory = new Gson().fromJson(request.body(), Territory.class);
             try {
                 new TerritoryRepository().create(territory);
                 response.status(HttpStatus.CREATED_201);
@@ -50,6 +58,13 @@ public class TerritoryEndPoint implements SparkApplication {
             }
             return json(territory);
         });
+    }
+
+    private Object returnTerritory(Territory territory) {
+        if (territory == null) {
+            Spark.halt(HttpStatus.NOT_FOUND_404, new Gson().toJson(new MessageReturn(TERRITORY_NOT_FOUND)));
+        }
+        return json(territory);
     }
 
     private Object returnTerritories(List<Territory> territories) {

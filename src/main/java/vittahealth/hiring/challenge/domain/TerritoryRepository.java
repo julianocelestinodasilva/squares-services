@@ -12,6 +12,13 @@ public class TerritoryRepository {
 
     private static final String GET_ALL_TERRITORIES = "SELECT * FROM territory u";
 
+    public Territory find(Long id) {
+        final Session session = session();
+        final Territory territory = session.find(Territory.class, id);
+        session.close();
+        return territory;
+    }
+
     public void create(Territory newTerritory) throws TerritoryOverlaysException,IncompleteDataException {
         if (incompleteData(newTerritory)) {
             throw new IncompleteDataException();
@@ -61,5 +68,4 @@ public class TerritoryRepository {
         }
         return incompleteData;
     }
-
 }
