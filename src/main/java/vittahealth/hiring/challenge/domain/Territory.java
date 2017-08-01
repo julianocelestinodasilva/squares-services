@@ -34,6 +34,10 @@ public class Territory {
     @ElementCollection(targetClass=Node.class,fetch=FetchType.EAGER)
     private List<Node> paintedSquares;
 
+    public boolean belongs(Node square) {
+        return false;
+    }
+
     public List<Node> paintedSquares() {
         return paintedSquares;
     }

@@ -7,6 +7,11 @@ public class Node implements Serializable {
 
     private int x;
     private int y;
+    private boolean painted;
+
+    public boolean isPainted() {
+        return painted;
+    }
 
     @Override
     public boolean equals(Object o) {
