@@ -26,6 +26,11 @@ public class SquareEndPointTest {
     }
 
     @Test
+    public void should_paint_square() throws Exception {
+
+    }
+
+    @Test
     public void get_status_of_a_square_painted() throws Exception {
         Territory territory = new Territory("A",new Node(0,0),new Node(50,50));
         territory.paint(new Node(1,2));
