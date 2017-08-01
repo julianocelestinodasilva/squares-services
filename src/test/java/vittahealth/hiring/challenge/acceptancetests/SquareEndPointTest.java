@@ -1,7 +1,6 @@
 package vittahealth.hiring.challenge.acceptancetests;
 
 
-import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.Test;
 import vittahealth.hiring.challenge.domain.Node;
@@ -33,15 +32,12 @@ public class SquareEndPointTest {
     @Test
     public void get_status_of_a_square_painted() throws Exception {
         Territory territory = new Territory("A",new Node(0,0),new Node(50,50));
-        territory.paint(new Node(1,2));
+        final Node square = new Node(1, 2);
+        territory.paint(square);
         persistTerritory(territory);
         url +=  "/1/2";
         logger.log(Level.INFO, url);
-        expect().statusCode(200).
-                body("x", equalTo(1)).
-                body("y", equalTo(2)).
-                body("painted", equalTo(true)).
-                when().get(url);
+        getStatusOfSquare(200,square);
     }
 
     @Test
@@ -50,11 +46,7 @@ public class SquareEndPointTest {
         persistTerritory(territory);
         url +=  "/1/2";
         logger.log(Level.INFO, url);
-        expect().statusCode(200).
-                body("x", equalTo(1)).
-                body("y", equalTo(2)).
-                body("painted", equalTo(false)).
-                when().get(url);
+        getStatusOfSquare(200,new Node(1, 2));
     }
 
     @Test
@@ -64,6 +56,14 @@ public class SquareEndPointTest {
         logger.log(Level.INFO, url);
         expect().statusCode(404).
                 body("messageReturn", equalTo("this square does not belong to any territory")).
+                when().get(url);
+    }
+
+    private void getStatusOfSquare(int statusCode,Node square) {
+        expect().statusCode(statusCode).
+                body("x", equalTo(square.getX())).
+                body("y", equalTo(square.getY())).
+                body("painted", equalTo(square.isPainted())).
                 when().get(url);
     }
 }

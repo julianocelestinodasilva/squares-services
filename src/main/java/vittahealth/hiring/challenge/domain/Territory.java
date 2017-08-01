@@ -49,6 +49,7 @@ public class Territory {
         }
         if (!paintedSquares.contains(squareToPain)) {
             paintedSquares.add(squareToPain);
+            squareToPain.painted(true);
         }
     }
 
