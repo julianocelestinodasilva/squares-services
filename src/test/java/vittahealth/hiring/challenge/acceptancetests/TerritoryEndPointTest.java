@@ -41,11 +41,10 @@ public class TerritoryEndPointTest {
         territory.paint(new Node(1,2));
         territory.paint(new Node(2,3));
         persistTerritory(territory);
-
         List<Node> expectedPaintedSquaresList = new ArrayList<Node>();
         expectedPaintedSquaresList.add(new Node(1,2));
         expectedPaintedSquaresList.add(new Node(2,3));
-        url +=  "/1?withPainted=true";
+        url +=  "/1?withpainted=true";
         logger.log(Level.INFO, url);
         expect().statusCode(200).
                 body("id", equalTo(Long.valueOf(territory.getId()).intValue())).
@@ -54,10 +53,7 @@ public class TerritoryEndPointTest {
                 body("end", equalTo(new Gson().toJson(territory.getEndArea()))).
                 body("area", equalTo(Long.valueOf(territory.area()).intValue())).
                 body("paintedArea", equalTo(expectedPaintedSquaresList.size())).
-
-                /*body("paintedSquares.get(0)", equalTo(expectedPaintedSquaresList.get(0))).
-                body("paintedSquares.get(1)", equalTo(expectedPaintedSquaresList.get(1))).*/
-
+                body("paintedSquares", equalTo(new Gson().toJson(expectedPaintedSquaresList))).
                 when().get(url);
     }
 

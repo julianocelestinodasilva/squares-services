@@ -34,6 +34,10 @@ public class Territory {
     @ElementCollection(targetClass=Node.class,fetch=FetchType.EAGER)
     private List<Node> paintedSquares;
 
+    public List<Node> paintedSquares() {
+        return paintedSquares;
+    }
+
     public void paint (Node squareToPain) {
         if (paintedSquares == null) {
             paintedSquares = new ArrayList<Node>();

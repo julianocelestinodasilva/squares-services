@@ -24,11 +24,14 @@ public class TerritoryEndPoint implements SparkApplication {
     private static final String TERRITORIES_NOT_FOUND = "territories not found";
     private static final String TERRITORY_NOT_FOUND = "territory not found";
 
+    private Boolean withpainted = false;
+
     @Override
     public void init() {
 
         get("/territories/:id", (request, response) -> {
             response.type("application/json");
+            withpainted = Boolean.valueOf(request.queryParams("withpainted"));
             Long id = Long.valueOf(request.params(":id"));
             Territory territory = new TerritoryRepository().find(id);
             return returnTerritory(territory);
@@ -75,7 +78,11 @@ public class TerritoryEndPoint implements SparkApplication {
 
     private Object json(Object toJson) {
         GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(Territory.class, new TerritorySerializer());
+        TerritorySerializer serializer = new TerritorySerializer();
+        if (withpainted) {
+            serializer = new TerritorySerializerWithPainted();
+        }
+        gsonBuilder.registerTypeAdapter(Territory.class, serializer);
         return gsonBuilder.create().toJson(toJson);
     }
 }
