@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DataBase {
 
-    public static void persistTerritory(Territory territory) throws IOException {
+    static void persistTerritory(Territory territory) throws IOException {
         final Session session = JPAUtil.session();
         session.getTransaction().begin();
         session.createNativeQuery("DELETE FROM territory_paintedsquares").executeUpdate();
@@ -22,7 +22,7 @@ public class DataBase {
         session.getTransaction().commit();
     }
 
-    public static List<Territory> persistTerritories(Territory territoryA, Territory territoryB) throws IOException {
+    static List<Territory> persistTerritories(Territory territoryA, Territory territoryB) throws IOException {
         List<Territory> territories = new ArrayList<Territory>();
         territories.add(territoryA);
         territories.add(territoryB);
@@ -38,7 +38,7 @@ public class DataBase {
         return territories;
     }
 
-    public static List<Territory> persistTerritories(Long paintedAreaTerritory1) throws IOException {
+    static List<Territory> persistTerritories(Long paintedAreaTerritory1) throws IOException {
         List<Territory> territories = new ArrayList<Territory>();
         Territory territoryA = new Territory("A",new Node(0,0),new Node(50,50));
         territories.add(territoryA);
@@ -60,7 +60,7 @@ public class DataBase {
         return territories;
     }
 
-    public static List<Territory> persistTerritories() throws IOException {
+    static List<Territory> persistTerritories() throws IOException {
         List<Territory> territories = new ArrayList<Territory>();
         Territory territoryA = new Territory("A",new Node(0,0),new Node(50,50));
         territories.add(territoryA);
@@ -78,7 +78,7 @@ public class DataBase {
         return territories;
     }
 
-    public static void deleteTerritories() throws IOException {
+    static void deleteTerritories() throws IOException {
         final Session session = JPAUtil.session();
         session.getTransaction().begin();
         session.createNativeQuery("DELETE FROM territory_paintedsquares").executeUpdate();
@@ -86,7 +86,7 @@ public class DataBase {
         session.getTransaction().commit();
     }
 
-    private static List<Node> createSquaresToPaint(Long paintedAreaTerritory1) {
+    static List<Node> createSquaresToPaint(Long paintedAreaTerritory1) {
         List<Node> squaresToPaint = new ArrayList<Node>();
         int i = 1;
         while (i <= paintedAreaTerritory1) {

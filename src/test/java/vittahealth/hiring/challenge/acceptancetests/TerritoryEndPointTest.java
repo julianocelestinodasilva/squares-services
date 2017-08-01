@@ -19,6 +19,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
+import static vittahealth.hiring.challenge.acceptancetests.DataBase.createSquaresToPaint;
 
 public class TerritoryEndPointTest {
 
@@ -102,9 +103,15 @@ public class TerritoryEndPointTest {
     @Test
     public void list_territories_ordered_by_most_proportional_painted_area() throws Exception {
         territory0 = new Territory("A",new Node(0,0),new Node(10,10));
-        // territory0.setPaintedArea(95L);
+        List<Node> squaresToPaint = createSquaresToPaint(95L);
+        for (Node squareToPaint : squaresToPaint) {
+            territory0.paint(squareToPaint);
+        }
         territory1 = new Territory("B",new Node(0,0),new Node(50,50));
-        // territory1.setPaintedArea(100L);
+        squaresToPaint = createSquaresToPaint(100L);
+        for (Node squareToPaint : squaresToPaint) {
+            territory1.paint(squareToPaint);
+        }
         territories = DataBase.persistTerritories(territory1,territory0);
         url +=  "?order=mostProportionalPaintedArea";
         expectTerritoryZeroFirst();
