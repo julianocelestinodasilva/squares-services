@@ -1,7 +1,7 @@
 package vittahealth.hiring.challenge.acceptancetests;
 
 import org.hibernate.Session;
-import vittahealth.hiring.challenge.JPAUtil;
+import vittahealth.hiring.challenge.persistence.JPAUtil;
 import vittahealth.hiring.challenge.domain.Node;
 import vittahealth.hiring.challenge.domain.Territory;
 

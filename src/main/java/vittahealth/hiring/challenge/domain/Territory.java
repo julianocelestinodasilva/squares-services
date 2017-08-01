@@ -4,7 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
-import vittahealth.hiring.challenge.NodeJsonType;
+import vittahealth.hiring.challenge.persistence.NodeJsonType;
 
 import javax.persistence.*;
 import java.util.ArrayList;

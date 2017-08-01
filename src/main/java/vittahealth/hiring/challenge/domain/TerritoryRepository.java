@@ -6,7 +6,7 @@ import org.hibernate.query.Query;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static vittahealth.hiring.challenge.JPAUtil.session;
+import static vittahealth.hiring.challenge.persistence.JPAUtil.session;
 
 public class TerritoryRepository {
 

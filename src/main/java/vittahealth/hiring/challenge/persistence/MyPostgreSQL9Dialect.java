@@ -1,4 +1,4 @@
-package vittahealth.hiring.challenge;
+package vittahealth.hiring.challenge.persistence;
 
 
 import org.hibernate.dialect.PostgreSQL9Dialect;
