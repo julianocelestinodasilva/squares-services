@@ -1,14 +1,17 @@
-package vittahealth.hiring.challenge;
+package vittahealth.hiring.challenge.api.endpoint;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.eclipse.jetty.http.HttpStatus;
 import spark.Spark;
 import spark.servlet.SparkApplication;
+import vittahealth.hiring.challenge.api.MessageReturn;
 import vittahealth.hiring.challenge.domain.IncompleteDataException;
 import vittahealth.hiring.challenge.domain.Territory;
 import vittahealth.hiring.challenge.domain.TerritoryOverlaysException;
 import vittahealth.hiring.challenge.domain.TerritoryRepository;
+import vittahealth.hiring.challenge.api.serializer.TerritorySerializer;
+import vittahealth.hiring.challenge.api.serializer.TerritorySerializerWithPainted;
 
 import java.util.Comparator;
 import java.util.List;

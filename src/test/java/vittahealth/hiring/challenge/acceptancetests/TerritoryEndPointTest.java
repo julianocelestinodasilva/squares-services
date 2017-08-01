@@ -1,13 +1,12 @@
 package vittahealth.hiring.challenge.acceptancetests;
 
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
-import vittahealth.hiring.challenge.SquareSerializerNoPaintedAttribute;
+import vittahealth.hiring.challenge.api.serializer.SquareSerializerNoPaintedAttribute;
 import vittahealth.hiring.challenge.domain.Node;
 import vittahealth.hiring.challenge.domain.Territory;
 

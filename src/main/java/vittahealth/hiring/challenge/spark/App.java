@@ -1,7 +1,7 @@
 package vittahealth.hiring.challenge.spark;
 
-import vittahealth.hiring.challenge.SquareEndPoint;
-import vittahealth.hiring.challenge.TerritoryEndPoint;
+import vittahealth.hiring.challenge.api.endpoint.SquareEndPoint;
+import vittahealth.hiring.challenge.api.endpoint.TerritoryEndPoint;
 
 import static spark.Spark.*;
 

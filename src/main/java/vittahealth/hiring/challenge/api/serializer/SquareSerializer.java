@@ -1,4 +1,4 @@
-package vittahealth.hiring.challenge;
+package vittahealth.hiring.challenge.api.serializer;
 
 
 import com.google.gson.*;
@@ -6,7 +6,7 @@ import vittahealth.hiring.challenge.domain.Node;
 
 import java.lang.reflect.Type;
 
-public class SquareSerializerNoPaintedAttribute implements JsonSerializer<Node> {
+public class SquareSerializer implements JsonSerializer<Node> {
 
     @Override
     public JsonElement serialize(Node node, Type type, JsonSerializationContext jsonSerializationContext) {
@@ -16,6 +16,7 @@ public class SquareSerializerNoPaintedAttribute implements JsonSerializer<Node> 
             tree = new JsonObject();
             tree.addProperty("x",node.getX());
             tree.addProperty("y",node.getY());
+            tree.addProperty("painted",node.isPainted());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

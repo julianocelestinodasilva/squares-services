@@ -1,4 +1,4 @@
-package vittahealth.hiring.challenge;
+package vittahealth.hiring.challenge.api.serializer;
 
 
 import com.google.gson.*;
@@ -7,8 +7,7 @@ import vittahealth.hiring.challenge.domain.Territory;
 
 import java.lang.reflect.Type;
 
-public class TerritorySerializer implements JsonSerializer<Territory> {
-
+public class TerritorySerializerWithPainted implements JsonSerializer<Territory> {
 
     @Override
     public JsonElement serialize(Territory territory, Type type, JsonSerializationContext jsonSerializationContext) {
@@ -24,6 +23,7 @@ public class TerritorySerializer implements JsonSerializer<Territory> {
             tree.addProperty("end",gsonBuilder.create().toJson((territory.getEndArea())));
             tree.addProperty("area",territory.area());
             tree.addProperty("paintedArea",territory.paintedArea());
+            tree.addProperty("paintedSquares",gsonBuilder.create().toJson(territory.paintedSquares()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
