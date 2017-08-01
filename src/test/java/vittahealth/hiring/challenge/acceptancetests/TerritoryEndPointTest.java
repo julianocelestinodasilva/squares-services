@@ -19,7 +19,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
-import static vittahealth.hiring.challenge.acceptancetests.DataBase.createSquaresToPaint;
+import static vittahealth.hiring.challenge.acceptancetests.DataBase.*;
 
 public class TerritoryEndPointTest {
 
@@ -40,7 +40,7 @@ public class TerritoryEndPointTest {
         Territory territory = new Territory("A",new Node(0,0),new Node(50,50));
         territory.paint(new Node(1,2));
         territory.paint(new Node(2,3));
-        DataBase.persistTerritory(territory);
+        persistTerritory(territory);
 
         List<Node> expectedPaintedSquaresList = new ArrayList<Node>();
         expectedPaintedSquaresList.add(new Node(1,2));
@@ -79,7 +79,7 @@ public class TerritoryEndPointTest {
 
     @Test
     public void should_return_error_territory_overlay() throws Exception {
-        DataBase.persistTerritory(new Territory("A",new Node(10,10),new Node(50,50)));
+        persistTerritory(new Territory("A",new Node(10,10),new Node(50,50)));
         Territory territoryToCreate = new Territory("B",new Node(10,10),new Node(50,50));
         Response response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
         assertError(response, 400, "this new territory overlays another territory");
@@ -87,7 +87,7 @@ public class TerritoryEndPointTest {
 
     @Test
     public void should_add_a_territory() throws Exception {
-        DataBase.deleteTerritories();
+        deleteTerritories();
         logger.log(Level.INFO, url);
         Territory territoryToCreate = new Territory("A",new Node(0,0),new Node(50,50));
         Response response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
@@ -112,14 +112,14 @@ public class TerritoryEndPointTest {
         for (Node squareToPaint : squaresToPaint) {
             territory1.paint(squareToPaint);
         }
-        territories = DataBase.persistTerritories(territory1,territory0);
+        territories = persistTerritories(territory1,territory0);
         url +=  "?order=mostProportionalPaintedArea";
         expectTerritoryZeroFirst();
     }
 
     @Test
     public void list_territories_ordered_by_most_painted_area() throws Exception {
-        territories = DataBase.persistTerritories(500L);
+        territories = persistTerritories(500L);
         territory0 = territories.get(0);
         territory1 = territories.get(1);
         url +=  "?order=mostPaintedArea";
@@ -143,7 +143,7 @@ public class TerritoryEndPointTest {
 
     @Test
     public void get_all_territories() throws Exception {
-        territories = DataBase.persistTerritories();
+        territories = persistTerritories();
         territory0 = territories.get(0);
         territory1 = territories.get(1);
         expectTerritoryZeroFirst();
@@ -151,7 +151,7 @@ public class TerritoryEndPointTest {
 
     @Test
     public void should_return_territories_not_found() throws Exception {
-        DataBase.deleteTerritories();
+        deleteTerritories();
         logger.log(Level.INFO, url);
         expect().statusCode(404).
                 body("messageReturn", equalTo("territories not found")).
