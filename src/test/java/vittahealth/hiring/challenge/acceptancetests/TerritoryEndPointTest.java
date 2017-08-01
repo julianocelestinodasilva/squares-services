@@ -2,10 +2,12 @@ package vittahealth.hiring.challenge.acceptancetests;
 
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
+import vittahealth.hiring.challenge.SquareSerializerNoPaintedAttribute;
 import vittahealth.hiring.challenge.domain.Node;
 import vittahealth.hiring.challenge.domain.Territory;
 
@@ -29,10 +31,14 @@ public class TerritoryEndPointTest {
     private Territory territory0;
     private Territory territory1;
     private List<Territory> territories;
+    private GsonBuilder gsonBuilder;
 
     @Before
     public void setUp() throws Exception {
         url = URLApi.territories();
+        gsonBuilder = new GsonBuilder();
+        SquareSerializerNoPaintedAttribute serializer = new SquareSerializerNoPaintedAttribute();
+        gsonBuilder.registerTypeAdapter(Node.class, serializer);
     }
 
     @Test
@@ -49,27 +55,27 @@ public class TerritoryEndPointTest {
         expect().statusCode(200).
                 body("id", equalTo(Long.valueOf(territory.getId()).intValue())).
                 body("name", equalTo(territory.getName())).
-                body("start", equalTo(new Gson().toJson(territory.getStartArea()))).
-                body("end", equalTo(new Gson().toJson(territory.getEndArea()))).
+                body("start", equalTo(gsonBuilder.create().toJson(territory.getStartArea()))).
+                body("end", equalTo(gsonBuilder.create().toJson(territory.getEndArea()))).
                 body("area", equalTo(Long.valueOf(territory.area()).intValue())).
                 body("paintedArea", equalTo(expectedPaintedSquaresList.size())).
-                body("paintedSquares", equalTo(new Gson().toJson(expectedPaintedSquaresList))).
+                body("paintedSquares", equalTo(gsonBuilder.create().toJson(expectedPaintedSquaresList))).
                 when().get(url);
     }
 
     @Test
     public void should_return_error_incomplete_data() throws Exception {
         Territory territoryToCreate = new Territory();
-        Response response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
+        Response response = given().contentType("application/json").and().body(gsonBuilder.create().toJson(territoryToCreate)).post(url);
         assertError(response, 400, "misses the start, end or name fields!");
         territoryToCreate = new Territory("",null,null);
-        response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
+        response = given().contentType("application/json").and().body(gsonBuilder.create().toJson(territoryToCreate)).post(url);
         assertError(response, 400, "misses the start, end or name fields!");
         territoryToCreate = new Territory(null,new Node(),null);
-        response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
+        response = given().contentType("application/json").and().body(gsonBuilder.create().toJson(territoryToCreate)).post(url);
         assertError(response, 400, "misses the start, end or name fields!");
         territoryToCreate = new Territory(null,null,new Node());
-        response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
+        response = given().contentType("application/json").and().body(gsonBuilder.create().toJson(territoryToCreate)).post(url);
         assertError(response, 400, "misses the start, end or name fields!");
     }
 
@@ -77,7 +83,7 @@ public class TerritoryEndPointTest {
     public void should_return_error_territory_overlay() throws Exception {
         persistTerritory(new Territory("A",new Node(10,10),new Node(50,50)));
         Territory territoryToCreate = new Territory("B",new Node(10,10),new Node(50,50));
-        Response response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
+        Response response = given().contentType("application/json").and().body(gsonBuilder.create().toJson(territoryToCreate)).post(url);
         assertError(response, 400, "this new territory overlays another territory");
     }
 
@@ -86,13 +92,13 @@ public class TerritoryEndPointTest {
         deleteTerritories();
         logger.log(Level.INFO, url);
         Territory territoryToCreate = new Territory("A",new Node(0,0),new Node(50,50));
-        Response response = given().contentType("application/json").and().body(new Gson().toJson(territoryToCreate)).post(url);
+        Response response = given().contentType("application/json").and().body(gsonBuilder.create().toJson(territoryToCreate)).post(url);
         assertEquals(201,response.getStatusCode());
         final JsonPath jsonResponse = response.jsonPath();
         assertEquals(1,jsonResponse.getLong("id"));
         assertEquals(territoryToCreate.getName(),jsonResponse.getString("name"));
-        assertEquals(new Gson().toJson(territoryToCreate.getStartArea()),jsonResponse.get("start"));
-        assertEquals(new Gson().toJson(territoryToCreate.getEndArea()),jsonResponse.get("end"));
+        assertEquals(gsonBuilder.create().toJson(territoryToCreate.getStartArea()),jsonResponse.get("start"));
+        assertEquals(gsonBuilder.create().toJson(territoryToCreate.getEndArea()),jsonResponse.get("end"));
         assertEquals(territoryToCreate.area(),jsonResponse.getLong("area"));
     }
 
@@ -124,14 +130,14 @@ public class TerritoryEndPointTest {
                 body("size()", is(territories.size())).
                 body("get(0).id", equalTo(Long.valueOf(territory1.getId()).intValue())).
                 body("get(0).name", equalTo(territory1.getName())).
-                body("get(0).start", equalTo(new Gson().toJson(territory1.getStartArea()))).
-                body("get(0).end", equalTo(new Gson().toJson(territory1.getEndArea()))).
+                body("get(0).start", equalTo(gsonBuilder.create().toJson(territory1.getStartArea()))).
+                body("get(0).end", equalTo(gsonBuilder.create().toJson(territory1.getEndArea()))).
                 body("get(0).area", equalTo(Long.valueOf(territory1.area()).intValue())).
                 body("get(0).paintedArea", equalTo(Long.valueOf(territory1.paintedArea()).intValue())).
                 body("get(1).id", equalTo(Long.valueOf(territory0.getId()).intValue())).
                 body("get(1).name", equalTo(territory0.getName())).
-                body("get(1).start", equalTo(new Gson().toJson(territory0.getStartArea()))).
-                body("get(1).end", equalTo(new Gson().toJson(territory0.getEndArea()))).
+                body("get(1).start", equalTo(gsonBuilder.create().toJson(territory0.getStartArea()))).
+                body("get(1).end", equalTo(gsonBuilder.create().toJson(territory0.getEndArea()))).
                 body("get(1).area", equalTo(Long.valueOf(territory0.area()).intValue())).
                 body("get(1).paintedArea", equalTo(Long.valueOf(territory0.paintedArea()).intValue())).
                 when().get(url);
@@ -166,14 +172,14 @@ public class TerritoryEndPointTest {
                 body("size()", is(territories.size())).
                 body("get(0).id", equalTo(Long.valueOf(territory0.getId()).intValue())).
                 body("get(0).name", equalTo(territory0.getName())).
-                body("get(0).start", equalTo(new Gson().toJson(territory0.getStartArea()))).
-                body("get(0).end", equalTo(new Gson().toJson(territory0.getEndArea()))).
+                body("get(0).start", equalTo(gsonBuilder.create().toJson(territory0.getStartArea()))).
+                body("get(0).end", equalTo(gsonBuilder.create().toJson(territory0.getEndArea()))).
                 body("get(0).area", equalTo(Long.valueOf(territory0.area()).intValue())).
                 body("get(0).paintedArea", equalTo(Long.valueOf(territory0.paintedArea()).intValue())).
                 body("get(1).id", equalTo(Long.valueOf(territory1.getId()).intValue())).
                 body("get(1).name", equalTo(territory1.getName())).
-                body("get(1).start", equalTo(new Gson().toJson(territory1.getStartArea()))).
-                body("get(1).end", equalTo(new Gson().toJson(territory1.getEndArea()))).
+                body("get(1).start", equalTo(gsonBuilder.create().toJson(territory1.getStartArea()))).
+                body("get(1).end", equalTo(gsonBuilder.create().toJson(territory1.getEndArea()))).
                 body("get(1).area", equalTo(Long.valueOf(territory1.area()).intValue())).
                 body("get(1).paintedArea", equalTo(Long.valueOf(territory1.paintedArea()).intValue())).
                 when().get(url);

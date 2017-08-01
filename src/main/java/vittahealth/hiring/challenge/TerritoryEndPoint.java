@@ -78,11 +78,11 @@ public class TerritoryEndPoint implements SparkApplication {
 
     private Object json(Object toJson) {
         GsonBuilder gsonBuilder = new GsonBuilder();
-        TerritorySerializer serializer = new TerritorySerializer();
         if (withpainted) {
-            serializer = new TerritorySerializerWithPainted();
+            gsonBuilder.registerTypeAdapter(Territory.class, new TerritorySerializerWithPainted());
+        } else {
+            gsonBuilder.registerTypeAdapter(Territory.class, new TerritorySerializer());
         }
-        gsonBuilder.registerTypeAdapter(Territory.class, serializer);
         return gsonBuilder.create().toJson(toJson);
     }
 }
