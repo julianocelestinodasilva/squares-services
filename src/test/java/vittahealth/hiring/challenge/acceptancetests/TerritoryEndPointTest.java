@@ -37,7 +37,10 @@ public class TerritoryEndPointTest {
     @Test
     public void get_territory_by_id_withpainted() throws Exception {
         Territory territory = new Territory("A",new Node(0,0),new Node(50,50));
+        territory.paint(new Node(1,2));
+        territory.paint(new Node(2,3));
         DataBase.persistTerritory(territory);
+
         List<Node> expectedPaintedSquaresList = new ArrayList<Node>();
         expectedPaintedSquaresList.add(new Node(1,2));
         expectedPaintedSquaresList.add(new Node(2,3));
@@ -121,13 +124,13 @@ public class TerritoryEndPointTest {
                 body("get(0).start", equalTo(new Gson().toJson(territory1.getStartArea()))).
                 body("get(0).end", equalTo(new Gson().toJson(territory1.getEndArea()))).
                 body("get(0).area", equalTo(Long.valueOf(territory1.area()).intValue())).
-                body("get(0).paintedArea", equalTo(Long.valueOf(territory1.getPaintedArea()).intValue())).
+                body("get(0).paintedArea", equalTo(Long.valueOf(territory1.paintedArea()).intValue())).
                 body("get(1).id", equalTo(Long.valueOf(territory0.getId()).intValue())).
                 body("get(1).name", equalTo(territory0.getName())).
                 body("get(1).start", equalTo(new Gson().toJson(territory0.getStartArea()))).
                 body("get(1).end", equalTo(new Gson().toJson(territory0.getEndArea()))).
                 body("get(1).area", equalTo(Long.valueOf(territory0.area()).intValue())).
-                body("get(1).paintedArea", equalTo(Long.valueOf(territory0.getPaintedArea()).intValue())).
+                body("get(1).paintedArea", equalTo(Long.valueOf(territory0.paintedArea()).intValue())).
                 when().get(url);
     }
 
@@ -163,13 +166,13 @@ public class TerritoryEndPointTest {
                 body("get(0).start", equalTo(new Gson().toJson(territory0.getStartArea()))).
                 body("get(0).end", equalTo(new Gson().toJson(territory0.getEndArea()))).
                 body("get(0).area", equalTo(Long.valueOf(territory0.area()).intValue())).
-                body("get(0).paintedArea", equalTo(Long.valueOf(territory0.getPaintedArea()).intValue())).
+                body("get(0).paintedArea", equalTo(Long.valueOf(territory0.paintedArea()).intValue())).
                 body("get(1).id", equalTo(Long.valueOf(territory1.getId()).intValue())).
                 body("get(1).name", equalTo(territory1.getName())).
                 body("get(1).start", equalTo(new Gson().toJson(territory1.getStartArea()))).
                 body("get(1).end", equalTo(new Gson().toJson(territory1.getEndArea()))).
                 body("get(1).area", equalTo(Long.valueOf(territory1.area()).intValue())).
-                body("get(1).paintedArea", equalTo(Long.valueOf(territory1.getPaintedArea()).intValue())).
+                body("get(1).paintedArea", equalTo(Long.valueOf(territory1.paintedArea()).intValue())).
                 when().get(url);
     }
 }

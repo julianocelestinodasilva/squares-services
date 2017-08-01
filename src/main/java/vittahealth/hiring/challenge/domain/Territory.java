@@ -6,10 +6,7 @@ import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 import vittahealth.hiring.challenge.NodeJsonType;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +31,6 @@ public class Territory {
     private Node endArea;
 
     @Column
-    @Type(type = "NodeJsonType")
     private List<Node> paintedSquares;
 
     public void paint (Node squareToPain) {
@@ -46,7 +42,7 @@ public class Territory {
         }
     }
 
-    public long getPaintedArea() {
+    public long paintedArea() {
         if (paintedSquares == null) {
             return 0;
         } else {
@@ -60,7 +56,7 @@ public class Territory {
     }
 
     public long proportionalPaintedArea() {
-        return ((Float) ((new Float(getPaintedArea()) / new Float(area())) * 100)).longValue();
+        return ((Float) ((new Float(paintedArea()) / new Float(area())) * 100)).longValue();
     }
 
     public long area() {
@@ -105,13 +101,5 @@ public class Territory {
 
     public void setEndArea(Node endArea) {
         this.endArea = endArea;
-    }
-
-    public List<Node> getPaintedSquares() {
-        return paintedSquares;
-    }
-
-    public void setPaintedSquares(List<Node> paintedSquares) {
-        this.paintedSquares = paintedSquares;
     }
 }

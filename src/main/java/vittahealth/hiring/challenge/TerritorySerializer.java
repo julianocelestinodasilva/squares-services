@@ -20,7 +20,7 @@ public class TerritorySerializer implements JsonSerializer<Territory> {
             tree.addProperty("start",new Gson().toJson(territory.getStartArea()));
             tree.addProperty("end",new Gson().toJson(territory.getEndArea()));
             tree.addProperty("area",territory.area());
-            tree.addProperty("paintedArea",territory.getPaintedArea());
+            tree.addProperty("paintedArea",territory.paintedArea());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
