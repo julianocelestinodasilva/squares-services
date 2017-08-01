@@ -9,6 +9,10 @@ public class Node implements Serializable {
     private int y;
     private boolean painted;
 
+    public void painted(boolean painted) {
+        this.painted = painted;
+    }
+
     public boolean isPainted() {
         return painted;
     }

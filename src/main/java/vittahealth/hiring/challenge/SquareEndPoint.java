@@ -32,6 +32,7 @@ public class SquareEndPoint implements SparkApplication {
             if (result == null) {
                 Spark.halt(HttpStatus.NOT_FOUND_404, new Gson().toJson(new MessageReturn("this square does not belong to any territory")));
             }
+            square.painted(result.paintedSquares().contains(square));
             return json(square);
         });
     }

@@ -26,6 +26,20 @@ public class SquareEndPointTest {
     }
 
     @Test
+    public void get_status_of_a_square_painted() throws Exception {
+        Territory territory = new Territory("A",new Node(0,0),new Node(50,50));
+        territory.paint(new Node(1,2));
+        persistTerritory(territory);
+        url +=  "/1/2";
+        logger.log(Level.INFO, url);
+        expect().statusCode(200).
+                body("x", equalTo(1)).
+                body("y", equalTo(2)).
+                body("painted", equalTo(true)).
+                when().get(url);
+    }
+
+    @Test
     public void get_status_of_a_square_no_painted() throws Exception {
         Territory territory = new Territory("A",new Node(0,0),new Node(50,50));
         persistTerritory(territory);
