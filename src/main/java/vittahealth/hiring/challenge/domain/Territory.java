@@ -43,11 +43,14 @@ public class Territory {
         return paintedSquares;
     }
 
-    public void paint (Node squareToPain) {
+    public void paint (Node squareToPain) throws InvalidPaintAreaException {
         if (paintedSquares == null) {
             paintedSquares = new ArrayList<Node>();
         }
         if (!paintedSquares.contains(squareToPain)) {
+            if (squareToPain.getY() - squareToPain.getX() != 1) {
+                throw new InvalidPaintAreaException();
+            }
             paintedSquares.add(squareToPain);
             squareToPain.painted(true);
         }

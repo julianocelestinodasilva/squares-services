@@ -1,6 +1,7 @@
 package vittahealth.hiring.challenge.acceptancetests;
 
 import org.hibernate.Session;
+import vittahealth.hiring.challenge.domain.InvalidPaintAreaException;
 import vittahealth.hiring.challenge.persistence.JPAUtil;
 import vittahealth.hiring.challenge.domain.Node;
 import vittahealth.hiring.challenge.domain.Territory;
@@ -38,7 +39,7 @@ public class DataBase {
         return territories;
     }
 
-    static List<Territory> persistTerritories(Long paintedAreaTerritory1) throws IOException {
+    static List<Territory> persistTerritories(Long paintedAreaTerritory1) throws IOException, InvalidPaintAreaException {
         List<Territory> territories = new ArrayList<Territory>();
         Territory territoryA = new Territory("A",new Node(0,0),new Node(50,50));
         territories.add(territoryA);

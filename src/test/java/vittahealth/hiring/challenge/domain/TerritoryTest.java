@@ -85,7 +85,7 @@ public class TerritoryTest {
         area(expectedArea, start, end);
     }
 
-    private void assertProportionalPaintedArea(Node start, Node end, int expectedProportionalPaintedArea, List<Node> squaresToPaint) {
+    private void assertProportionalPaintedArea(Node start, Node end, int expectedProportionalPaintedArea, List<Node> squaresToPaint) throws InvalidPaintAreaException {
         Territory territory = new Territory("TerritoryTest",start,end);
         for (Node suareToPain : squaresToPaint) {
             territory.paint(suareToPain);
