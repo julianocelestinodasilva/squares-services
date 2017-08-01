@@ -15,6 +15,7 @@ public class DataBase {
     public static void persistTerritory(Territory territory) throws IOException {
         final Session session = JPAUtil.session();
         session.getTransaction().begin();
+        session.createNativeQuery("DELETE FROM territory_paintedsquares").executeUpdate();
         session.createNativeQuery("DELETE FROM Territory").executeUpdate();
         session.persist(territory);
         session.flush();
@@ -27,6 +28,7 @@ public class DataBase {
         territories.add(territoryB);
         final Session session = JPAUtil.session();
         session.getTransaction().begin();
+        session.createNativeQuery("DELETE FROM territory_paintedsquares").executeUpdate();
         session.createNativeQuery("DELETE FROM Territory").executeUpdate();
         for (Territory territory : territories) {
             session.persist(territory);
@@ -48,6 +50,7 @@ public class DataBase {
         territories.add(territoryB);
         final Session session = JPAUtil.session();
         session.getTransaction().begin();
+        session.createNativeQuery("DELETE FROM territory_paintedsquares").executeUpdate();
         session.createNativeQuery("DELETE FROM Territory").executeUpdate();
         for (Territory territory : territories) {
             session.persist(territory);
@@ -65,6 +68,7 @@ public class DataBase {
         territories.add(territoryB);
         final Session session = JPAUtil.session();
         session.getTransaction().begin();
+        session.createNativeQuery("DELETE FROM territory_paintedsquares").executeUpdate();
         session.createNativeQuery("DELETE FROM Territory").executeUpdate();
         for (Territory territory : territories) {
             session.persist(territory);
@@ -77,6 +81,7 @@ public class DataBase {
     public static void deleteTerritories() throws IOException {
         final Session session = JPAUtil.session();
         session.getTransaction().begin();
+        session.createNativeQuery("DELETE FROM territory_paintedsquares").executeUpdate();
         session.createNativeQuery("DELETE FROM Territory").executeUpdate();
         session.getTransaction().commit();
     }

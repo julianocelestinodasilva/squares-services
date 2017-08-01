@@ -31,6 +31,7 @@ public class Territory {
     private Node endArea;
 
     @Column
+    @ElementCollection(targetClass=Node.class,fetch=FetchType.EAGER)
     private List<Node> paintedSquares;
 
     public void paint (Node squareToPain) {
