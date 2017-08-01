@@ -35,7 +35,8 @@ public class Territory {
     private List<Node> paintedSquares;
 
     public boolean belongs(Node square) {
-        return false;
+        return ((square.getX() > startArea.getX() && square.getY() > startArea.getY())
+                && (square.getX() < endArea.getX() && square.getY() < endArea.getY()));
     }
 
     public List<Node> paintedSquares() {

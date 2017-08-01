@@ -6,10 +6,20 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TerritoryTest {
+
+    @Test
+    public void square_does_not_belong_to_territory() throws Exception {
+        final Node start = new Node(0,0);
+        final Node end = new Node(50,50);
+        Territory territory = new Territory("A",start,end);
+        final boolean belongs = territory.belongs(new Node(51, 52));
+        assertFalse(belongs);
+    }
 
     @Test
     public void square_belongs_to_territory() throws Exception {
