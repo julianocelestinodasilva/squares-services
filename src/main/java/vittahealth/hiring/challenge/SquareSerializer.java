@@ -15,7 +15,7 @@ public class SquareSerializer implements JsonSerializer<Node> {
             Gson gson = new Gson();
             tree = new JsonObject();
             tree.addProperty("x",node.getX());
-            tree.addProperty("Y",node.getY());
+            tree.addProperty("y",node.getY());
             tree.addProperty("painted",node.isPainted());
         } catch (Exception e) {
             throw new RuntimeException(e);

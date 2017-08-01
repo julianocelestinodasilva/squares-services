@@ -24,19 +24,16 @@ public class SquareEndPoint implements SparkApplication {
             List<Territory> territories = new TerritoryRepository().find();
             int x = Integer.valueOf(request.params(":x"));
             int y = Integer.valueOf(request.params(":y"));
+            Node square = new Node(x,y);
             Territory result = territories.stream()
-                    .filter(territory -> territory.belongs(new Node(x,y)))
+                    .filter(territory -> territory.belongs(square))
                     .findAny()
                     .orElse(null);
-            return returnSquare(result);
+            if (result == null) {
+                Spark.halt(HttpStatus.NOT_FOUND_404, new Gson().toJson(new MessageReturn("this square does not belong to any territory")));
+            }
+            return json(square);
         });
-    }
-
-    private Object returnSquare(Territory territory) {
-        if (territory == null) {
-            Spark.halt(HttpStatus.NOT_FOUND_404, new Gson().toJson(new MessageReturn("this square does not belongs to any territory")));
-        }
-        return json(territory);
     }
 
     private Object json(Object toJson) {
