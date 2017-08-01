@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DataBase {
 
-    static void persistTerritory(Territory territory) throws IOException {
+    static void persistTerritoryToTest(Territory territory) throws IOException {
         final Session session = JPAUtil.session();
         session.getTransaction().begin();
         session.createNativeQuery("DELETE FROM territory_paintedsquares").executeUpdate();

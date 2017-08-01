@@ -12,11 +12,12 @@ public class TerritoryRepository {
 
     private static final String GET_ALL_TERRITORIES = "SELECT * FROM territory u";
 
-    public Territory find(Long id) {
+    public void update(Territory newTerritory) {
         final Session session = session();
-        final Territory territory = session.find(Territory.class, id);
+        session.getTransaction().begin();
+        session.update(newTerritory);
+        session.getTransaction().commit();
         session.close();
-        return territory;
     }
 
     public void create(Territory newTerritory) throws TerritoryOverlaysException,IncompleteDataException {
@@ -38,6 +39,13 @@ public class TerritoryRepository {
         final List<Territory> territories = query.list();
         session.close();
         return territories;
+    }
+
+    public Territory find(Long id) {
+        final Session session = session();
+        final Territory territory = session.find(Territory.class, id);
+        session.close();
+        return territory;
     }
 
     private void verifyTerritoryOverlays(Territory newTerritory, List<Territory> allTerritories) throws TerritoryOverlaysException {

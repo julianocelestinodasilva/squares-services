@@ -45,7 +45,7 @@ public class TerritoryEndPointTest {
         Territory territory = new Territory("A",new Node(0,0),new Node(50,50));
         territory.paint(new Node(1,2));
         territory.paint(new Node(2,3));
-        persistTerritory(territory);
+        persistTerritoryToTest(territory);
         List<Node> expectedPaintedSquaresList = new ArrayList<Node>();
         expectedPaintedSquaresList.add(new Node(1,2));
         expectedPaintedSquaresList.add(new Node(2,3));
@@ -80,7 +80,7 @@ public class TerritoryEndPointTest {
 
     @Test
     public void should_return_error_territory_overlay() throws Exception {
-        persistTerritory(new Territory("A",new Node(10,10),new Node(50,50)));
+        persistTerritoryToTest(new Territory("A",new Node(10,10),new Node(50,50)));
         Territory territoryToCreate = new Territory("B",new Node(10,10),new Node(50,50));
         Response response = given().contentType("application/json").and().body(gsonBuilder.create().toJson(territoryToCreate)).post(url);
         assertError(response, 400, "this new territory overlays another territory");
