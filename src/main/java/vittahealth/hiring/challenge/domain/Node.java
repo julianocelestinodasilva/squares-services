@@ -9,11 +9,11 @@ public class Node implements Serializable {
     private int x;
     private int y;
     private boolean painted;
-    private Date paintData;
+    private Date paintDate;
 
     public void painted(boolean painted) {
         this.painted = painted;
-        this.paintData = new Date();
+        this.paintDate = new Date();
     }
 
     public boolean isPainted() {
