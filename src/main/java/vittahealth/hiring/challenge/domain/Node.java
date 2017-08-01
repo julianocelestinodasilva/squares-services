@@ -2,15 +2,18 @@ package vittahealth.hiring.challenge.domain;
 
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Node implements Serializable {
 
     private int x;
     private int y;
     private boolean painted;
+    private Date paintData;
 
     public void painted(boolean painted) {
         this.painted = painted;
+        this.paintData = new Date();
     }
 
     public boolean isPainted() {
