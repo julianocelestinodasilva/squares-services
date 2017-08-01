@@ -40,14 +40,6 @@ public class TerritoryRepository {
         return territories;
     }
 
-    public List<Territory> findOrderedByMostPaintedArea() {
-        final Session session = session();
-        Query<Territory> query = session.createNativeQuery(GET_ALL_TERRITORIES + " ORDER BY paintedArea DESC", Territory.class);
-        final List<Territory> territories = query.list();
-        session.close();
-        return territories;
-    }
-
     private void verifyTerritoryOverlays(Territory newTerritory, List<Territory> allTerritories) throws TerritoryOverlaysException {
         List<Territory> territoriesWithSameArea = allTerritories.stream()
                 .filter(territory -> territory.isSameArea(newTerritory))

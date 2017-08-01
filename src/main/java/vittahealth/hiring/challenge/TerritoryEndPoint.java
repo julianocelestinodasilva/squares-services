@@ -37,12 +37,11 @@ public class TerritoryEndPoint implements SparkApplication {
         get("/territories", (request, response) -> {
             response.type("application/json");
             final String order = request.queryParams("order");
-            if (ORDER_BY_MOST_PAINTED_AREA.equals(order)) {
-                return returnTerritories(new TerritoryRepository().findOrderedByMostPaintedArea());
-            }
             List<Territory> territories = new TerritoryRepository().find();
             if (ORDER_BY_MOST_PROPORTIONAL_PAINTED_AREA.equals(order)) {
                 territories.sort(Comparator.comparing(Territory::proportionalPaintedArea).reversed());
+            } else if (ORDER_BY_MOST_PAINTED_AREA.equals(order)) {
+                territories.sort(Comparator.comparing(Territory::paintedArea).reversed());
             }
             return returnTerritories(territories);
         });
