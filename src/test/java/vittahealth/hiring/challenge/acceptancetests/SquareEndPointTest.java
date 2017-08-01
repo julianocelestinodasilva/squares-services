@@ -25,17 +25,27 @@ public class SquareEndPointTest {
     }
 
     @Test
+    public void should_return_this_square_does_not_belong_to_any_territory_when_try_paint() throws Exception {
+        Territory territory = new Territory("A",new Node(0,0),new Node(50,50));
+        persistTerritoryToTest(territory);
+        url +=  "/51/52/paint";
+        logger.log(Level.INFO, url);
+        expect().statusCode(404).
+                body("messageReturn", equalTo("this square does not belong to any territory")).
+                when().patch(url);
+    }
+
+    @Test
     public void should_paint_square() throws Exception {
         Territory territory = new Territory("A",new Node(0,0),new Node(50,50));
         final Node square = new Node(1, 2);
         persistTerritoryToTest(territory);
-        territory.paint(square);
         url +=  "/"+square.getX()+"/"+square.getY()+"/paint";
         logger.log(Level.INFO, url);
         expect().statusCode(200).
                 body("x", equalTo(square.getX())).
                 body("y", equalTo(square.getY())).
-                body("painted", equalTo(square.isPainted())).
+                body("painted", equalTo(true)).
                 when().patch(url);
     }
 
@@ -62,7 +72,8 @@ public class SquareEndPointTest {
     @Test
     public void should_return_this_square_does_not_belong_to_any_territory() throws Exception {
         deleteTerritories();
-        url +=  "/1/2";
+        Node square = new Node(1,2);
+        url +=  "/"+square.getX()+"/"+square.getY();
         logger.log(Level.INFO, url);
         expect().statusCode(404).
                 body("messageReturn", equalTo("this square does not belong to any territory")).

@@ -1,5 +1,6 @@
 package vittahealth.hiring.challenge.domain;
 
+import com.google.gson.Gson;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -13,6 +14,7 @@ public class TerritoryRepository {
     private static final String GET_ALL_TERRITORIES = "SELECT * FROM territory u";
 
     public void update(Territory newTerritory) {
+        System.out.println("newTerritory.paintedSquares() =" + new Gson().toJson(newTerritory.paintedSquares()));
         final Session session = session();
         session.getTransaction().begin();
         session.update(newTerritory);
