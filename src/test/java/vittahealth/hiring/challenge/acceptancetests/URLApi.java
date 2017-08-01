@@ -10,4 +10,8 @@ public class URLApi {
         return URL_API + "/territories";
     }
 
+    static String squares() {
+        return URL_API + "/squares";
+    }
+
 }
