@@ -1,4 +1,6 @@
 
+This is a API that exposes the Squares Services.
+This app was developed using Java 8 (frameworks : sparkjava v2.5.5, hibernate v5.2.8.Final) and Postgres Data Base.
 
 
  Build Application and run Tests :
