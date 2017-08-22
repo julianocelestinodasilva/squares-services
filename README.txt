@@ -14,9 +14,9 @@ To execute the acceptance tests, run JUnit in the package br.com.julianocelestin
 
 - End Points :
 
-GET  http://localhost:4567/territories (It can use the query parameter order=mostPaintedArea/mostProportionalPaintedArea) ;
+GET  http://localhost:4567/territories (It can use the query parameter order=mostPaintedArea/mostProportionalPaintedArea)
 
-GET  http://localhost:4567/territories/:id (It can use the query parameter withpainted=true/false) ;
+GET  http://localhost:4567/territories/:id (It can use the query parameter withpainted=true/false)
 
 POST http://localhost:4567/territories
 
