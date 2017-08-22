@@ -21,6 +21,7 @@ GET  http://localhost:4567/territories/:id (It can use the query parameter withp
 POST http://localhost:4567/territories
 
 GET   http://localhost:4567/squares/:x/:y
+
 PATCH http://localhost:4567/squares/:x/:y/paint
 
 
